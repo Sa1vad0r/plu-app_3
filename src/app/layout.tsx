@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import SWRegister from '@/components/SWRegister';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -26,19 +27,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.remove('dark')}else{document.documentElement.classList.add('dark')}})()`,
-          }}
-        />
         <link
           href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
       </head>
       <body className="font-sans">
+        <SWRegister />
         {children}
       </body>
     </html>
