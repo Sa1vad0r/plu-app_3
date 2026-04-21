@@ -115,14 +115,14 @@ export default function PLUTab({
   return (
     <div>
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-zinc-950/95 backdrop-blur-sm border-b border-zinc-800/50">
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-zinc-200/50">
         <div className="max-w-lg mx-auto">
           <div className="flex items-center justify-between px-4 pt-3 pb-2.5">
             <div>
               <span className="font-mono font-bold text-xl text-heb-red-500 tracking-tight">
                 PLU
               </span>
-              <span className="text-zinc-600 text-sm font-normal ml-1.5">
+              <span className="text-zinc-400 text-sm font-normal ml-1.5">
                 // quick search
               </span>
             </div>
@@ -130,14 +130,14 @@ export default function PLUTab({
               <button
                 onClick={onExport}
                 title="Export"
-                className="w-10 h-10 rounded-xl border border-zinc-800 bg-zinc-900 text-zinc-400 flex items-center justify-center text-lg hover:bg-zinc-800 active:scale-95 transition-all"
+                className="w-10 h-10 rounded-xl border border-zinc-200 bg-white text-zinc-500 flex items-center justify-center text-lg hover:bg-zinc-100 active:scale-95 transition-all"
               >
                 📤
               </button>
               <button
                 onClick={() => importRef.current?.click()}
                 title="Import"
-                className="w-10 h-10 rounded-xl border border-zinc-800 bg-zinc-900 text-zinc-400 flex items-center justify-center text-lg hover:bg-zinc-800 active:scale-95 transition-all"
+                className="w-10 h-10 rounded-xl border border-zinc-200 bg-white text-zinc-500 flex items-center justify-center text-lg hover:bg-zinc-100 active:scale-95 transition-all"
               >
                 📥
               </button>
@@ -169,10 +169,10 @@ export default function PLUTab({
         {filtered.length === 0 && items.length === 0 ? (
           <div className="text-center py-16 px-5">
             <div className="text-5xl mb-3">🥩</div>
-            <h3 className="text-base font-bold text-zinc-200 mb-1.5">
+            <h3 className="text-base font-bold text-zinc-700 mb-1.5">
               No PLUs yet
             </h3>
-            <p className="text-sm text-zinc-500 leading-relaxed">
+            <p className="text-sm text-zinc-400 leading-relaxed">
               Tap the <strong className="text-heb-red-500">+</strong> button to add
               your first PLU.
               <br />
@@ -182,18 +182,18 @@ export default function PLUTab({
         ) : filtered.length === 0 ? (
           <div className="text-center py-16 px-5">
             <div className="text-5xl mb-3">🔍</div>
-            <h3 className="text-base font-bold text-zinc-200 mb-1.5">
+            <h3 className="text-base font-bold text-zinc-700 mb-1.5">
               No matches
             </h3>
-            <p className="text-sm text-zinc-500">
+            <p className="text-sm text-zinc-400">
               Try a different search or filter.
             </p>
           </div>
         ) : (
           <>
-            <div className="text-[11px] font-bold text-zinc-500 uppercase tracking-widest font-mono mt-4 mb-2">
+            <div className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest font-mono mt-4 mb-2">
               Results{' '}
-              <span className="font-normal text-zinc-600">
+              <span className="font-normal text-zinc-400">
                 {filtered.length}
               </span>
             </div>

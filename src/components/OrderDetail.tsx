@@ -70,7 +70,7 @@ export default function OrderDetail({
     <BottomSheet open={open} onClose={onClose} title="Order Detail">
       {/* Customer Info */}
       <div className="mb-4">
-        <div className="text-xl font-bold text-zinc-100 mb-1">
+        <div className="text-xl font-bold text-zinc-900 mb-1">
           {order.customerName}
         </div>
         {order.phone && (
@@ -110,7 +110,7 @@ export default function OrderDetail({
                 className={`flex-1 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
                   isActive
                     ? `${config.bg} ${config.color} border border-current`
-                    : 'bg-zinc-900 text-zinc-600 border border-zinc-800'
+                    : 'bg-zinc-100 text-zinc-500 border border-zinc-200'
                 }`}
               >
                 {config.label}
@@ -121,7 +121,7 @@ export default function OrderDetail({
         {order.status === 'pending' && (
           <button
             onClick={() => onStatusChange(order.id, 'cancelled')}
-            className="mt-2 text-xs text-zinc-600 hover:text-heb-red-400 transition-colors"
+            className="mt-2 text-xs text-zinc-400 hover:text-heb-red-500 transition-colors"
           >
             Cancel order
           </button>
@@ -134,15 +134,15 @@ export default function OrderDetail({
       </div>
 
       {/* Pickup */}
-      <div className="space-y-0 divide-y divide-zinc-800 mb-4">
+      <div className="space-y-0 divide-y divide-zinc-100 mb-4">
         <div className="flex justify-between py-2.5 text-sm">
           <span className="text-zinc-500">Pickup Date</span>
-          <span className="text-zinc-200">{formatDate(order.pickupDate)}</span>
+          <span className="text-zinc-800">{formatDate(order.pickupDate)}</span>
         </div>
         {order.pickupTime && (
           <div className="flex justify-between py-2.5 text-sm">
             <span className="text-zinc-500">Pickup Time</span>
-            <span className="text-zinc-200">
+            <span className="text-zinc-800">
               {formatTime(order.pickupTime)}
             </span>
           </div>
@@ -158,10 +158,10 @@ export default function OrderDetail({
           {order.items.map((item, i) => (
             <div
               key={item.id}
-              className="p-3 rounded-xl bg-zinc-900/80 border border-zinc-800"
+              className="p-3 rounded-xl bg-zinc-50 border border-zinc-200"
             >
               <div className="flex items-start justify-between">
-                <div className="text-sm font-semibold text-zinc-200">
+                <div className="text-sm font-semibold text-zinc-800">
                   {i + 1}. {item.name}
                 </div>
               </div>
@@ -171,11 +171,11 @@ export default function OrderDetail({
                     PLU: {item.plu}
                   </span>
                 )}
-                <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-800 text-zinc-400 font-semibold">
+                <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-500 font-semibold">
                   Qty: {item.quantity}
                 </span>
                 {item.weight && (
-                  <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-800 text-zinc-400 font-semibold">
+                  <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-500 font-semibold">
                     {item.weight}
                   </span>
                 )}
@@ -196,7 +196,7 @@ export default function OrderDetail({
           <div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-1">
             Notes
           </div>
-          <div className="text-sm text-zinc-300">{order.notes}</div>
+          <div className="text-sm text-zinc-600">{order.notes}</div>
         </div>
       )}
 
@@ -204,7 +204,7 @@ export default function OrderDetail({
       <div className="space-y-2">
         <button
           onClick={handleCopy}
-          className="w-full py-3.5 rounded-xl bg-zinc-800 text-zinc-200 font-bold text-[15px] hover:bg-zinc-700 active:scale-[0.97] transition-all flex items-center justify-center gap-2"
+          className="w-full py-3.5 rounded-xl bg-zinc-100 text-zinc-700 font-bold text-[15px] hover:bg-zinc-200 active:scale-[0.97] transition-all flex items-center justify-center gap-2"
         >
           📋 Copy Order to Clipboard
         </button>

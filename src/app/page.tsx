@@ -36,14 +36,14 @@ export default function Home() {
 
   if (!loaded) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
-        <div className="text-zinc-500 text-sm animate-pulse">Loading...</div>
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-zinc-400 text-sm animate-pulse">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100">
+    <div className="min-h-screen bg-white text-zinc-900">
       {/* Tab Content */}
       <div className={activeTab === 'plu' ? '' : 'hidden'}>
         <PLUTab

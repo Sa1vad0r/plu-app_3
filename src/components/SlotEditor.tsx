@@ -176,20 +176,20 @@ export default function SlotEditor({
           value={plu}
           onChange={(e) => handlePluSearch(e.target.value)}
           placeholder="Search PLU or product..."
-          className="w-full py-3 px-3.5 rounded-xl border border-zinc-800 bg-zinc-900/80 text-zinc-100 text-[15px] outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-600"
+          className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 bg-white text-zinc-900 text-[15px] outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-400"
         />
         {suggestions.length > 0 && suggestionSource === 'plu' && (
-          <div className="absolute top-full left-0 right-0 mt-1 bg-zinc-900 border border-zinc-700 rounded-lg overflow-hidden z-10 shadow-xl">
+          <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-zinc-200 rounded-lg overflow-hidden z-10 shadow-lg">
             {suggestions.map((s) => (
               <button
                 key={s.id}
                 onClick={() => selectPlu(s)}
-                className="w-full text-left px-3 py-2.5 hover:bg-zinc-800 transition-colors border-b border-zinc-800 last:border-0"
+                className="w-full text-left px-3 py-2.5 hover:bg-zinc-50 transition-colors border-b border-zinc-100 last:border-0"
               >
                 <span className="font-mono text-heb-red-500 text-sm font-bold">
                   {s.plu}
                 </span>
-                <span className="text-zinc-300 text-sm ml-2">{s.name}</span>
+                <span className="text-zinc-600 text-sm ml-2">{s.name}</span>
               </button>
             ))}
           </div>
@@ -205,20 +205,20 @@ export default function SlotEditor({
           value={productName}
           onChange={(e) => handleNameSearch(e.target.value)}
           placeholder="e.g. Beef Ribeye Steak"
-          className="w-full py-3 px-3.5 rounded-xl border border-zinc-800 bg-zinc-900/80 text-zinc-100 text-[15px] outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-600"
+          className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 bg-white text-zinc-900 text-[15px] outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-400"
         />
         {suggestions.length > 0 && suggestionSource === 'name' && (
-          <div className="absolute top-full left-0 right-0 mt-1 bg-zinc-900 border border-zinc-700 rounded-lg overflow-hidden z-10 shadow-xl">
+          <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-zinc-200 rounded-lg overflow-hidden z-10 shadow-lg">
             {suggestions.map((s) => (
               <button
                 key={s.id}
                 onClick={() => selectPlu(s)}
-                className="w-full text-left px-3 py-2.5 hover:bg-zinc-800 transition-colors border-b border-zinc-800 last:border-0"
+                className="w-full text-left px-3 py-2.5 hover:bg-zinc-50 transition-colors border-b border-zinc-100 last:border-0"
               >
                 <span className="font-mono text-heb-red-500 text-sm font-bold">
                   {s.plu}
                 </span>
-                <span className="text-zinc-300 text-sm ml-2">{s.name}</span>
+                <span className="text-zinc-600 text-sm ml-2">{s.name}</span>
               </button>
             ))}
           </div>
@@ -236,7 +236,7 @@ export default function SlotEditor({
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             placeholder="$5.99/lb"
-            className="w-full py-3 px-3.5 rounded-xl border border-zinc-800 bg-zinc-900/80 text-zinc-100 text-[15px] outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-600"
+            className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 bg-white text-zinc-900 text-[15px] outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-400"
           />
         </div>
         <div>
@@ -248,7 +248,7 @@ export default function SlotEditor({
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Any notes..."
-            className="w-full py-3 px-3.5 rounded-xl border border-zinc-800 bg-zinc-900/80 text-zinc-100 text-[15px] outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-600"
+            className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 bg-white text-zinc-900 text-[15px] outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-400"
           />
         </div>
       </div>
@@ -265,7 +265,7 @@ export default function SlotEditor({
               className={`px-3 py-2 rounded-xl text-xs font-bold transition-all ${
                 flags.includes(f.value)
                   ? f.color + " border border-current"
-                  : "bg-zinc-900 text-zinc-600 border border-zinc-800"
+                  : "bg-zinc-50 text-zinc-400 border border-zinc-200"
               }`}
             >
               {f.label}
@@ -294,7 +294,7 @@ export default function SlotEditor({
                 onClearSingle();
                 onClose();
               }}
-              className="w-full py-3 rounded-xl border border-heb-red-800 text-heb-red-400 font-semibold text-sm hover:bg-heb-red-900/20 transition-colors"
+              className="w-full py-3 rounded-xl border border-heb-red-200 text-heb-red-500 font-semibold text-sm hover:bg-heb-red-50 transition-colors"
             >
               Clear slot
             </button>
@@ -308,20 +308,20 @@ export default function SlotEditor({
               {multiItems.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center gap-2 p-3 rounded-xl bg-emerald-900/40 border border-emerald-800"
+                  className="flex items-center gap-2 p-3 rounded-xl bg-emerald-50 border border-emerald-200"
                 >
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-semibold text-emerald-200 truncate">
+                    <div className="text-sm font-semibold text-emerald-700 truncate">
                       {item.productName}
                     </div>
                     <div className="flex gap-1.5 mt-0.5">
                       {item.plu && (
-                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400 font-mono">
+                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-zinc-100 text-zinc-500 font-mono">
                           {item.plu}
                         </span>
                       )}
                       {item.price && (
-                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400 font-mono">
+                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-zinc-100 text-zinc-500 font-mono">
                           {item.price}
                         </span>
                       )}
@@ -340,8 +340,8 @@ export default function SlotEditor({
 
           {/* Add new item form */}
           {addingNew ? (
-            <div className="p-3 rounded-xl border border-zinc-700 bg-zinc-900/50 space-y-3">
-              <div className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
+            <div className="p-3 rounded-xl border border-zinc-200 bg-zinc-50 space-y-3">
+              <div className="text-xs font-bold text-zinc-500 uppercase tracking-wider">
                 Add product
               </div>
               {formFields}
@@ -351,7 +351,7 @@ export default function SlotEditor({
                     setAddingNew(false);
                     resetAddFields();
                   }}
-                  className="flex-1 py-2.5 rounded-xl border border-zinc-700 text-zinc-400 text-sm font-semibold"
+                  className="flex-1 py-2.5 rounded-xl border border-zinc-200 text-zinc-500 text-sm font-semibold"
                 >
                   Cancel
                 </button>
@@ -367,7 +367,7 @@ export default function SlotEditor({
           ) : (
             <button
               onClick={() => setAddingNew(true)}
-              className="w-full py-3 rounded-xl border border-dashed border-zinc-700 text-zinc-500 text-sm font-semibold hover:border-zinc-500 hover:text-zinc-300 transition-colors"
+              className="w-full py-3 rounded-xl border border-dashed border-zinc-300 text-zinc-400 text-sm font-semibold hover:border-zinc-400 hover:text-zinc-600 transition-colors"
             >
               + Add product
             </button>

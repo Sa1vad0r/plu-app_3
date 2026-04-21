@@ -121,7 +121,7 @@ export default function OrdersTab({ pluItems, onToast }: OrdersTabProps) {
   return (
     <div>
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-zinc-950/95 backdrop-blur-sm border-b border-zinc-800/50">
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-zinc-200/50">
         <div className="max-w-lg mx-auto">
           <div className="flex items-center justify-between px-4 pt-3 pb-2.5">
             <div>
@@ -145,7 +145,7 @@ export default function OrdersTab({ pluItems, onToast }: OrdersTabProps) {
                 className={`px-4 py-2 text-[13px] font-semibold whitespace-nowrap border-b-2 transition-colors capitalize ${
                   filter === f
                     ? 'text-heb-red-500 border-heb-red-500'
-                    : 'text-zinc-500 border-transparent hover:text-zinc-300'
+                    : 'text-zinc-400 border-transparent hover:text-zinc-600'
                 }`}
               >
                 {f === 'active'
@@ -164,7 +164,7 @@ export default function OrdersTab({ pluItems, onToast }: OrdersTabProps) {
         {filtered.length === 0 ? (
           <div className="text-center py-16 px-5">
             <div className="text-5xl mb-3">📋</div>
-            <h3 className="text-base font-bold text-zinc-200 mb-1.5">
+            <h3 className="text-base font-bold text-zinc-700 mb-1.5">
               {orders.length === 0 ? 'No orders yet' : 'No orders here'}
             </h3>
             <p className="text-sm text-zinc-500 leading-relaxed">
@@ -177,7 +177,7 @@ export default function OrdersTab({ pluItems, onToast }: OrdersTabProps) {
           <>
             <div className="text-[11px] font-bold text-zinc-500 uppercase tracking-widest font-mono mt-4 mb-2">
               Orders{' '}
-              <span className="font-normal text-zinc-600">
+              <span className="font-normal text-zinc-400">
                 {filtered.length}
               </span>
             </div>

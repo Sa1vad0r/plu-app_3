@@ -28,18 +28,18 @@ function Cell({
       onClick={onClick}
       className={`h-7 flex items-center justify-center transition-all text-center overflow-hidden ${
         selected
-          ? "bg-amber-600 outline outline-2 outline-amber-400 -outline-offset-1 z-10 relative"
+          ? "bg-amber-500 outline-2 outline-amber-400 -outline-offset-1 z-10 relative"
           : filled
-            ? "bg-emerald-900 hover:bg-emerald-800"
-            : "bg-zinc-900/50 hover:bg-zinc-800/80"
+            ? "bg-emerald-100 hover:bg-emerald-200"
+            : "bg-zinc-100 hover:bg-zinc-200"
       }`}
     >
       {filled ? (
-        <span className="text-[7px] font-semibold text-emerald-300 truncate px-0.5 leading-tight">
+        <span className="text-[7px] font-semibold text-emerald-700 truncate px-0.5 leading-tight">
           {filled.productName}
         </span>
       ) : (
-        <span className="text-zinc-700 text-xs">+</span>
+        <span className="text-zinc-400 text-xs">+</span>
       )}
     </button>
   );
@@ -60,21 +60,21 @@ function EndcapBlock({
   return (
     <button
       onClick={onClick}
-      className={`w-full min-h-[44px] rounded-lg flex flex-col items-center justify-center gap-0.5 px-2 py-1.5 transition-all ${
+      className={`w-full min-h-11 rounded-lg flex flex-col items-center justify-center gap-0.5 px-2 py-1.5 transition-all ${
         selected
-          ? "bg-amber-600 outline outline-2 outline-amber-400 -outline-offset-1"
+          ? "bg-amber-500 outline-2 outline-amber-400 -outline-offset-1"
           : filled
-            ? "bg-emerald-900 border border-emerald-700 hover:bg-emerald-800"
-            : "bg-zinc-900/50 border border-dashed border-zinc-700 hover:border-zinc-500"
+            ? "bg-emerald-50 border border-emerald-300 hover:bg-emerald-100"
+            : "bg-zinc-50 border border-dashed border-zinc-300 hover:border-zinc-400"
       }`}
     >
       <span
         className={`text-[9px] font-bold uppercase tracking-wider ${
           selected
-            ? "text-amber-200"
+            ? "text-amber-100"
             : filled
-              ? "text-emerald-500"
-              : "text-zinc-600"
+              ? "text-emerald-600"
+              : "text-zinc-400"
         }`}
       >
         {label}
@@ -84,7 +84,7 @@ function EndcapBlock({
           <div key={i} className="text-center">
             <div
               className={`text-[9px] font-semibold leading-tight ${
-                selected ? "text-amber-100" : "text-emerald-300"
+                selected ? "text-amber-100" : "text-emerald-700"
               }`}
             >
               {item.productName}
@@ -92,7 +92,7 @@ function EndcapBlock({
             {item.price && (
               <div
                 className={`text-[8px] font-mono ${
-                  selected ? "text-amber-200" : "text-emerald-400"
+                  selected ? "text-amber-200" : "text-emerald-600"
                 }`}
               >
                 {item.price}
@@ -102,7 +102,7 @@ function EndcapBlock({
         ))
       ) : (
         <span
-          className={`text-lg ${selected ? "text-amber-300" : "text-zinc-700"}`}
+          className={`text-lg ${selected ? "text-amber-200" : "text-zinc-400"}`}
         >
           +
         </span>
@@ -126,21 +126,21 @@ function ExtraBlock({
   return (
     <button
       onClick={onClick}
-      className={`w-full min-h-[56px] rounded-xl flex flex-col items-center justify-center gap-0.5 px-3 py-2 transition-all ${
+      className={`w-full min-h-14 rounded-xl flex flex-col items-center justify-center gap-0.5 px-3 py-2 transition-all ${
         selected
-          ? "bg-amber-600 outline outline-2 outline-amber-400 -outline-offset-1"
+          ? "bg-amber-500 outline-2 outline-amber-400 -outline-offset-1"
           : filled
-            ? "bg-emerald-900 border border-emerald-700 hover:bg-emerald-800"
-            : "bg-zinc-900/50 border border-dashed border-zinc-700 hover:border-zinc-500"
+            ? "bg-emerald-50 border border-emerald-300 hover:bg-emerald-100"
+            : "bg-zinc-50 border border-dashed border-zinc-300 hover:border-zinc-400"
       }`}
     >
       <span
         className={`text-[10px] font-bold uppercase tracking-wider mb-0.5 ${
           selected
-            ? "text-amber-200"
+            ? "text-amber-100"
             : filled
-              ? "text-emerald-500"
-              : "text-zinc-600"
+              ? "text-emerald-600"
+              : "text-zinc-400"
         }`}
       >
         {label}
@@ -150,7 +150,7 @@ function ExtraBlock({
           <div key={i} className="text-center">
             <div
               className={`text-[10px] font-semibold ${
-                selected ? "text-amber-100" : "text-emerald-300"
+                selected ? "text-amber-100" : "text-emerald-700"
               }`}
             >
               {item.productName}
@@ -158,7 +158,7 @@ function ExtraBlock({
             {item.price && (
               <div
                 className={`text-[8px] font-mono ${
-                  selected ? "text-amber-200" : "text-emerald-400"
+                  selected ? "text-amber-200" : "text-emerald-600"
                 }`}
               >
                 {item.price}
@@ -168,7 +168,7 @@ function ExtraBlock({
         ))
       ) : (
         <span
-          className={`text-lg ${selected ? "text-amber-300" : "text-zinc-700"}`}
+          className={`text-lg ${selected ? "text-amber-200" : "text-zinc-400"}`}
         >
           +
         </span>
@@ -205,7 +205,7 @@ export default function IslandMap({
         }
       />
 
-      <div className="w-full grid grid-cols-2 gap-px bg-zinc-800/50 border-x border-zinc-800/50 my-px">
+      <div className="w-full grid grid-cols-2 gap-px bg-zinc-200 border-x border-zinc-200 my-px">
         {Array.from({ length: island.rows }).flatMap((_, r) =>
           (["L", "R"] as const).map((side) => {
             const key = `${island.id}-${r}-${side}`;

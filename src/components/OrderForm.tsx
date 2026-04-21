@@ -158,7 +158,7 @@ export default function OrderForm({
             value={customerName}
             onChange={(e) => setCustomerName(e.target.value)}
             placeholder="e.g. John Smith"
-            className="w-full py-3 px-3.5 rounded-xl border border-zinc-800 bg-zinc-900/80 text-zinc-100 text-[15px] outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-600"
+            className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 bg-white text-zinc-900 text-[15px] outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-400"
           />
         </div>
 
@@ -172,7 +172,7 @@ export default function OrderForm({
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="(210) 555-1234"
-            className="w-full py-3 px-3.5 rounded-xl border border-zinc-800 bg-zinc-900/80 text-zinc-100 text-[15px] outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-600"
+            className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 bg-white text-zinc-900 text-[15px] outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-400"
           />
         </div>
 
@@ -208,7 +208,7 @@ export default function OrderForm({
             <label className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
               Items *
             </label>
-            <span className="text-xs text-zinc-600">{items.length} item{items.length !== 1 ? 's' : ''}</span>
+            <span className="text-xs text-zinc-400">{items.length} item{items.length !== 1 ? 's' : ''}</span>
           </div>
 
           {items.length > 0 && (
@@ -216,10 +216,10 @@ export default function OrderForm({
               {items.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-start gap-2 p-3 rounded-xl bg-zinc-900/80 border border-zinc-800"
+                  className="flex items-start gap-2 p-3 rounded-xl bg-zinc-50 border border-zinc-200"
                 >
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-semibold text-zinc-200 truncate">
+                    <div className="text-sm font-semibold text-zinc-800 truncate">
                       {item.name}
                     </div>
                     <div className="flex flex-wrap gap-1.5 mt-1">
@@ -228,11 +228,11 @@ export default function OrderForm({
                           PLU: {item.plu}
                         </span>
                       )}
-                      <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-800 text-zinc-400 font-semibold">
+                      <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-500 font-semibold">
                         Qty: {item.quantity}
                       </span>
                       {item.weight && (
-                        <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-800 text-zinc-400 font-semibold">
+                        <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-500 font-semibold">
                           {item.weight}
                         </span>
                       )}
@@ -256,8 +256,8 @@ export default function OrderForm({
 
           {/* Add Item Section */}
           {showAddItem ? (
-            <div className="p-3 rounded-xl border border-zinc-700 bg-zinc-900/50 space-y-3">
-              <div className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
+            <div className="p-3 rounded-xl border border-zinc-200 bg-zinc-50 space-y-3">
+              <div className="text-xs font-bold text-zinc-500 uppercase tracking-wider">
                 Add Item
               </div>
 
@@ -268,20 +268,20 @@ export default function OrderForm({
                   value={itemPlu}
                   onChange={(e) => handlePluSearch(e.target.value)}
                   placeholder="Search PLU or product name..."
-                  className="w-full py-2.5 px-3 rounded-lg border border-zinc-800 bg-zinc-950 text-zinc-100 text-sm outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-600"
+                  className="w-full py-2.5 px-3 rounded-lg border border-zinc-200 bg-white text-zinc-900 text-sm outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-400"
                 />
                 {pluSuggestions.length > 0 && (
-                  <div className="absolute top-full left-0 right-0 mt-1 bg-zinc-900 border border-zinc-700 rounded-lg overflow-hidden z-10 shadow-xl">
+                  <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-zinc-200 rounded-lg overflow-hidden z-10 shadow-lg">
                     {pluSuggestions.map((s) => (
                       <button
                         key={s.id}
                         onClick={() => selectPlu(s)}
-                        className="w-full text-left px-3 py-2.5 hover:bg-zinc-800 transition-colors border-b border-zinc-800 last:border-0"
+                        className="w-full text-left px-3 py-2.5 hover:bg-zinc-50 transition-colors border-b border-zinc-100 last:border-0"
                       >
                         <span className="font-mono text-heb-red-500 text-sm font-bold">
                           {s.plu}
                         </span>
-                        <span className="text-zinc-300 text-sm ml-2">
+                        <span className="text-zinc-600 text-sm ml-2">
                           {s.name}
                         </span>
                       </button>
@@ -296,7 +296,7 @@ export default function OrderForm({
                 value={itemName}
                 onChange={(e) => setItemName(e.target.value)}
                 placeholder="Product name *"
-                className="w-full py-2.5 px-3 rounded-lg border border-zinc-800 bg-zinc-950 text-zinc-100 text-sm outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-600"
+                className="w-full py-2.5 px-3 rounded-lg border border-zinc-200 bg-white text-zinc-900 text-sm outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-400"
               />
 
               <div className="grid grid-cols-3 gap-2">
@@ -306,21 +306,21 @@ export default function OrderForm({
                   onChange={(e) => setItemQty(e.target.value)}
                   placeholder="Qty"
                   min="1"
-                  className="py-2.5 px-3 rounded-lg border border-zinc-800 bg-zinc-950 text-zinc-100 text-sm outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-600"
+                  className="py-2.5 px-3 rounded-lg border border-zinc-200 bg-white text-zinc-900 text-sm outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-400"
                 />
                 <input
                   type="text"
                   value={itemWeight}
                   onChange={(e) => setItemWeight(e.target.value)}
                   placeholder="Weight"
-                  className="py-2.5 px-3 rounded-lg border border-zinc-800 bg-zinc-950 text-zinc-100 text-sm outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-600"
+                  className="py-2.5 px-3 rounded-lg border border-zinc-200 bg-white text-zinc-900 text-sm outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-400"
                 />
                 <input
                   type="text"
                   value={itemNotes}
                   onChange={(e) => setItemNotes(e.target.value)}
                   placeholder="Cut style"
-                  className="py-2.5 px-3 rounded-lg border border-zinc-800 bg-zinc-950 text-zinc-100 text-sm outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-600"
+                  className="py-2.5 px-3 rounded-lg border border-zinc-200 bg-white text-zinc-900 text-sm outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-400"
                 />
               </div>
 
@@ -330,7 +330,7 @@ export default function OrderForm({
                     clearItemFields();
                     setShowAddItem(false);
                   }}
-                  className="flex-1 py-2.5 rounded-lg border border-zinc-700 text-zinc-400 text-sm font-semibold"
+                  className="flex-1 py-2.5 rounded-lg border border-zinc-200 text-zinc-500 text-sm font-semibold"
                 >
                   Cancel
                 </button>
@@ -346,7 +346,7 @@ export default function OrderForm({
           ) : (
             <button
               onClick={() => setShowAddItem(true)}
-              className="w-full py-3 rounded-xl border border-dashed border-zinc-700 text-zinc-500 text-sm font-semibold hover:border-zinc-500 hover:text-zinc-300 transition-colors"
+              className="w-full py-3 rounded-xl border border-dashed border-zinc-300 text-zinc-400 text-sm font-semibold hover:border-zinc-400 hover:text-zinc-600 transition-colors"
             >
               + Add Item
             </button>
@@ -379,7 +379,7 @@ export default function OrderForm({
         {editOrder && onDelete && (
           <button
             onClick={handleDelete}
-            className="w-full py-3 rounded-xl border border-heb-red-800 text-heb-red-400 font-semibold text-sm hover:bg-heb-red-900/20 transition-colors"
+            className="w-full py-3 rounded-xl border border-heb-red-200 text-heb-red-500 font-semibold text-sm hover:bg-heb-red-50 transition-colors"
           >
             Delete Order
           </button>
