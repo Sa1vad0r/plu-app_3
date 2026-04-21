@@ -5,6 +5,7 @@ import { usePLUStore } from '@/lib/store';
 import TabNav, { AppTab } from '@/components/TabNav';
 import PLUTab from '@/components/PLUTab';
 import OrdersTab from '@/components/OrdersTab';
+import IslandsTab from '@/components/IslandsTab';
 import Toast from '@/components/Toast';
 
 interface ToastState {
@@ -61,15 +62,7 @@ export default function Home() {
       </div>
 
       <div className={activeTab === 'islands' ? '' : 'hidden'}>
-        <div className="flex items-center justify-center min-h-screen px-4">
-          <div className="text-center">
-            <div className="text-5xl mb-3">🏝️</div>
-            <h3 className="text-base font-bold text-zinc-200 mb-1.5">
-              Island Planner
-            </h3>
-            <p className="text-sm text-zinc-500">Coming soon</p>
-          </div>
-        </div>
+        <IslandsTab pluItems={items} onToast={showToast} />
       </div>
 
       {/* Bottom Tab Navigation */}
