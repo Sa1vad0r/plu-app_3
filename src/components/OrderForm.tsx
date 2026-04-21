@@ -150,7 +150,7 @@ export default function OrderForm({
       <div className="space-y-4">
         {/* Customer Name */}
         <div>
-          <label className="block text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-1.5">
+          <label className="block text-xs font-semibold text-zinc-600 uppercase tracking-wider mb-1.5">
             Customer Name *
           </label>
           <input
@@ -164,7 +164,7 @@ export default function OrderForm({
 
         {/* Phone */}
         <div>
-          <label className="block text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-1.5">
+          <label className="block text-xs font-semibold text-zinc-600 uppercase tracking-wider mb-1.5">
             Phone Number
           </label>
           <input
@@ -179,7 +179,7 @@ export default function OrderForm({
         {/* Pickup Date & Time */}
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-semibold text-zinc-600 uppercase tracking-wider mb-1.5">
               Pickup Date *
             </label>
             <input
@@ -190,7 +190,7 @@ export default function OrderForm({
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-semibold text-zinc-600 uppercase tracking-wider mb-1.5">
               Pickup Time
             </label>
             <input
@@ -205,10 +205,10 @@ export default function OrderForm({
         {/* Items List */}
         <div>
           <div className="flex items-center justify-between mb-1.5">
-            <label className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+            <label className="text-xs font-semibold text-zinc-600 uppercase tracking-wider">
               Items *
             </label>
-            <span className="text-xs text-zinc-400">{items.length} item{items.length !== 1 ? 's' : ''}</span>
+            <span className="text-xs text-zinc-500">{items.length} item{items.length !== 1 ? 's' : ''}</span>
           </div>
 
           {items.length > 0 && (
@@ -228,11 +228,11 @@ export default function OrderForm({
                           PLU: {item.plu}
                         </span>
                       )}
-                      <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-500 font-semibold">
+                      <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-600 font-semibold">
                         Qty: {item.quantity}
                       </span>
                       {item.weight && (
-                        <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-500 font-semibold">
+                        <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-600 font-semibold">
                           {item.weight}
                         </span>
                       )}
@@ -355,7 +355,7 @@ export default function OrderForm({
 
         {/* Notes */}
         <div>
-          <label className="block text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-1.5">
+          <label className="block text-xs font-semibold text-zinc-600 uppercase tracking-wider mb-1.5">
             Notes
           </label>
           <textarea

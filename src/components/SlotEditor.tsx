@@ -168,7 +168,7 @@ export default function SlotEditor({
   const formFields = (
     <>
       <div className="relative">
-        <label className="block text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-1.5">
+        <label className="block text-xs font-semibold text-zinc-600 uppercase tracking-wider mb-1.5">
           PLU Code
         </label>
         <input
@@ -197,7 +197,7 @@ export default function SlotEditor({
       </div>
 
       <div className="relative">
-        <label className="block text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-1.5">
+        <label className="block text-xs font-semibold text-zinc-600 uppercase tracking-wider mb-1.5">
           Product Name *
         </label>
         <input
@@ -228,7 +228,7 @@ export default function SlotEditor({
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-1.5">
+          <label className="block text-xs font-semibold text-zinc-600 uppercase tracking-wider mb-1.5">
             Price
           </label>
           <input
@@ -240,7 +240,7 @@ export default function SlotEditor({
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-1.5">
+          <label className="block text-xs font-semibold text-zinc-600 uppercase tracking-wider mb-1.5">
             Notes
           </label>
           <input
@@ -254,7 +254,7 @@ export default function SlotEditor({
       </div>
 
       <div>
-        <label className="block text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-1.5">
+        <label className="block text-xs font-semibold text-zinc-600 uppercase tracking-wider mb-1.5">
           Flags
         </label>
         <div className="flex flex-wrap gap-2">
@@ -265,7 +265,7 @@ export default function SlotEditor({
               className={`px-3 py-2 rounded-xl text-xs font-bold transition-all ${
                 flags.includes(f.value)
                   ? f.color + " border border-current"
-                  : "bg-zinc-50 text-zinc-400 border border-zinc-200"
+                  : "bg-zinc-50 text-zinc-600 border border-zinc-200"
               }`}
             >
               {f.label}

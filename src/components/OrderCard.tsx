@@ -34,7 +34,7 @@ export default function OrderCard({ order, onClick }: OrderCardProps) {
             {order.customerName}
           </div>
           {order.phone && (
-            <div className="text-xs text-zinc-500 font-mono mt-0.5">
+            <div className="text-xs text-zinc-600 font-mono mt-0.5">
               {order.phone}
             </div>
           )}
@@ -48,7 +48,7 @@ export default function OrderCard({ order, onClick }: OrderCardProps) {
 
       {/* Pickup info */}
       <div className="flex items-center gap-2 mb-2">
-        <span className="text-xs text-zinc-500">
+        <span className="text-xs text-zinc-600">
           {today ? (
             <span className="text-amber-400 font-bold">TODAY</span>
           ) : (
@@ -58,13 +58,13 @@ export default function OrderCard({ order, onClick }: OrderCardProps) {
         {order.pickupTime && (
           <>
             <span className="text-zinc-300">·</span>
-            <span className="text-xs text-zinc-500">
+            <span className="text-xs text-zinc-600">
               {formatTime(order.pickupTime)}
             </span>
           </>
         )}
         <span className="text-zinc-700">·</span>
-        <span className="text-xs text-zinc-500">
+        <span className="text-xs text-zinc-600">
           {order.items.length} item{order.items.length !== 1 ? 's' : ''}
         </span>
       </div>
@@ -74,14 +74,14 @@ export default function OrderCard({ order, onClick }: OrderCardProps) {
         {order.items.slice(0, 3).map((item) => (
           <span
             key={item.id}
-            className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-500 font-semibold truncate max-w-[150px]"
+            className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-600 font-semibold truncate max-w-[150px]"
           >
             {item.quantity > 1 ? `${item.quantity}× ` : ''}
             {item.name}
           </span>
         ))}
         {order.items.length > 3 && (
-          <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-800 text-zinc-500 font-semibold">
+          <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-600 font-semibold">
             +{order.items.length - 3} more
           </span>
         )}

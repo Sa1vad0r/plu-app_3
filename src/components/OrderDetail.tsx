@@ -96,7 +96,7 @@ export default function OrderDetail({
 
       {/* Status */}
       <div className="mb-4">
-        <div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+        <div className="text-xs font-semibold text-zinc-600 uppercase tracking-wider mb-2">
           Status
         </div>
         <div className="flex gap-1.5">
@@ -136,12 +136,12 @@ export default function OrderDetail({
       {/* Pickup */}
       <div className="space-y-0 divide-y divide-zinc-100 mb-4">
         <div className="flex justify-between py-2.5 text-sm">
-          <span className="text-zinc-500">Pickup Date</span>
+          <span className="text-zinc-600">Pickup Date</span>
           <span className="text-zinc-800">{formatDate(order.pickupDate)}</span>
         </div>
         {order.pickupTime && (
           <div className="flex justify-between py-2.5 text-sm">
-            <span className="text-zinc-500">Pickup Time</span>
+            <span className="text-zinc-600">Pickup Time</span>
             <span className="text-zinc-800">
               {formatTime(order.pickupTime)}
             </span>
@@ -151,7 +151,7 @@ export default function OrderDetail({
 
       {/* Items */}
       <div className="mb-4">
-        <div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+        <div className="text-xs font-semibold text-zinc-600 uppercase tracking-wider mb-2">
           Items ({order.items.length})
         </div>
         <div className="space-y-2">
@@ -171,11 +171,11 @@ export default function OrderDetail({
                     PLU: {item.plu}
                   </span>
                 )}
-                <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-500 font-semibold">
+                <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-600 font-semibold">
                   Qty: {item.quantity}
                 </span>
                 {item.weight && (
-                  <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-500 font-semibold">
+                  <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-600 font-semibold">
                     {item.weight}
                   </span>
                 )}
@@ -193,10 +193,10 @@ export default function OrderDetail({
       {/* Notes */}
       {order.notes && (
         <div className="mb-4">
-          <div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-1">
+          <div className="text-xs font-semibold text-zinc-600 uppercase tracking-wider mb-1">
             Notes
           </div>
-          <div className="text-sm text-zinc-600">{order.notes}</div>
+          <div className="text-sm text-zinc-700">{order.notes}</div>
         </div>
       )}
 

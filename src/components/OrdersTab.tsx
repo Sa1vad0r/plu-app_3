@@ -145,7 +145,7 @@ export default function OrdersTab({ pluItems, onToast }: OrdersTabProps) {
                 className={`px-4 py-2 text-[13px] font-semibold whitespace-nowrap border-b-2 transition-colors capitalize ${
                   filter === f
                     ? 'text-heb-red-500 border-heb-red-500'
-                    : 'text-zinc-400 border-transparent hover:text-zinc-600'
+                    : 'text-zinc-500 border-transparent hover:text-zinc-700'
                 }`}
               >
                 {f === 'active'
@@ -177,7 +177,7 @@ export default function OrdersTab({ pluItems, onToast }: OrdersTabProps) {
           <>
             <div className="text-[11px] font-bold text-zinc-500 uppercase tracking-widest font-mono mt-4 mb-2">
               Orders{' '}
-              <span className="font-normal text-zinc-400">
+              <span className="font-normal text-zinc-500">
                 {filtered.length}
               </span>
             </div>

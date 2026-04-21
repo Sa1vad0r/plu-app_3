@@ -237,7 +237,7 @@ export default function IslandsTab({ pluItems, onToast }: IslandsTabProps) {
               <span className="font-mono font-bold text-xl text-heb-red-500 tracking-tight">
                 Islands
               </span>
-              <span className="text-zinc-400 text-xs font-normal ml-1.5">
+              <span className="text-zinc-500 text-xs font-normal ml-1.5">
                 {filled} filled
               </span>
             </div>
@@ -278,7 +278,7 @@ export default function IslandsTab({ pluItems, onToast }: IslandsTabProps) {
               className={`flex-1 py-2 text-[13px] font-semibold border-b-2 transition-colors ${
                 weekView === "current"
                   ? "text-heb-red-500 border-heb-red-500"
-                  : "text-zinc-400 border-transparent"
+                  : "text-zinc-500 border-transparent"
               }`}
             >
               {currentWeek.weekLabel}
@@ -289,7 +289,7 @@ export default function IslandsTab({ pluItems, onToast }: IslandsTabProps) {
               className={`flex-1 py-2 text-[13px] font-semibold border-b-2 transition-colors ${
                 weekView === "next"
                   ? "text-heb-red-500 border-heb-red-500"
-                  : "text-zinc-400 border-transparent"
+                  : "text-zinc-500 border-transparent"
               }`}
             >
               {nextWeek.weekLabel}
@@ -301,11 +301,11 @@ export default function IslandsTab({ pluItems, onToast }: IslandsTabProps) {
 
       {/* Legend */}
       <div className="max-w-lg mx-auto flex gap-4 justify-center px-4 py-2.5">
-        <div className="flex items-center gap-1.5 text-[10px] text-zinc-400">
+        <div className="flex items-center gap-1.5 text-[10px] text-zinc-500">
           <div className="w-3 h-3 rounded-sm bg-zinc-100 border border-zinc-300" />
           Empty
         </div>
-        <div className="flex items-center gap-1.5 text-[10px] text-zinc-400">
+        <div className="flex items-center gap-1.5 text-[10px] text-zinc-500">
           <div className="w-3 h-3 rounded-sm bg-emerald-100 border border-emerald-300" />
           Filled
         </div>
@@ -326,7 +326,7 @@ export default function IslandsTab({ pluItems, onToast }: IslandsTabProps) {
           <div className="mt-6">
             <button
               onClick={handleRollWeek}
-              className="w-full py-3 rounded-xl border border-zinc-200 text-zinc-400 text-sm font-semibold hover:border-zinc-400 hover:text-zinc-600 transition-colors"
+              className="w-full py-3 rounded-xl border border-zinc-200 text-zinc-500 text-sm font-semibold hover:border-zinc-400 hover:text-zinc-700 transition-colors"
             >
               Roll Next Week → Current
             </button>

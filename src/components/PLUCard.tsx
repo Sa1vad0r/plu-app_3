@@ -47,7 +47,7 @@ export default function PLUCard({ item, query, onClick }: PLUCardProps) {
         <div className="font-mono font-bold text-base text-heb-red-500 mb-0.5">
           <Highlight text={item.plu} query={query} />
         </div>
-        <div className="text-sm font-semibold text-zinc-700 dark:text-zinc-200 truncate mb-1">
+        <div className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 truncate mb-1">
           <Highlight text={item.name} query={query} />
         </div>
         <div className="flex flex-wrap gap-1">
@@ -57,19 +57,19 @@ export default function PLUCard({ item, query, onClick }: PLUCardProps) {
             </span>
           )}
           {item.tray && (
-            <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 font-semibold font-mono">
+            <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 font-semibold font-mono">
               Tray: {item.tray}
             </span>
           )}
           {item.weight && (
-            <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 font-semibold font-mono">
+            <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 font-semibold font-mono">
               {item.weight}
             </span>
           )}
           {item.tags.map((t) => (
             <span
               key={t}
-              className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 font-semibold font-mono"
+              className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 font-semibold font-mono"
             >
               {t}
             </span>

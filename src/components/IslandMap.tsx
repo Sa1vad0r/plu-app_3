@@ -35,7 +35,7 @@ function Cell({
       }`}
     >
       {filled ? (
-        <span className="text-[7px] font-semibold text-emerald-700 truncate px-0.5 leading-tight">
+        <span className="text-[8px] font-bold text-emerald-800 truncate px-0.5 leading-tight">
           {filled.productName}
         </span>
       ) : (
@@ -73,7 +73,7 @@ function EndcapBlock({
           selected
             ? "text-amber-100"
             : filled
-              ? "text-emerald-600"
+              ? "text-emerald-700"
               : "text-zinc-400"
         }`}
       >
@@ -84,7 +84,7 @@ function EndcapBlock({
           <div key={i} className="text-center">
             <div
               className={`text-[9px] font-semibold leading-tight ${
-                selected ? "text-amber-100" : "text-emerald-700"
+                selected ? "text-amber-100" : "text-emerald-800"
               }`}
             >
               {item.productName}
@@ -92,7 +92,7 @@ function EndcapBlock({
             {item.price && (
               <div
                 className={`text-[8px] font-mono ${
-                  selected ? "text-amber-200" : "text-emerald-600"
+                  selected ? "text-amber-200" : "text-emerald-700"
                 }`}
               >
                 {item.price}
@@ -139,7 +139,7 @@ function ExtraBlock({
           selected
             ? "text-amber-100"
             : filled
-              ? "text-emerald-600"
+              ? "text-emerald-700"
               : "text-zinc-400"
         }`}
       >
@@ -150,7 +150,7 @@ function ExtraBlock({
           <div key={i} className="text-center">
             <div
               className={`text-[10px] font-semibold ${
-                selected ? "text-amber-100" : "text-emerald-700"
+                selected ? "text-amber-100" : "text-emerald-800"
               }`}
             >
               {item.productName}
@@ -158,7 +158,7 @@ function ExtraBlock({
             {item.price && (
               <div
                 className={`text-[8px] font-mono ${
-                  selected ? "text-amber-200" : "text-emerald-600"
+                  selected ? "text-amber-200" : "text-emerald-700"
                 }`}
               >
                 {item.price}

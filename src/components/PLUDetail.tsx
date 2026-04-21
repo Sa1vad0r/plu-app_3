@@ -43,26 +43,26 @@ export default function PLUDetail({
       <div className="space-y-0 divide-y divide-zinc-200 dark:divide-zinc-800">
         {item.category && (
           <div className="flex justify-between py-2.5 text-sm">
-            <span className="text-zinc-400 dark:text-zinc-500">Category</span>
-            <span className="text-zinc-700 dark:text-zinc-200 capitalize">{item.category}</span>
+            <span className="text-zinc-600 dark:text-zinc-400">Category</span>
+            <span className="text-zinc-900 dark:text-zinc-100 capitalize">{item.category}</span>
           </div>
         )}
         {item.tray && (
           <div className="flex justify-between py-2.5 text-sm">
-            <span className="text-zinc-400 dark:text-zinc-500">Tray Size</span>
-            <span className="text-zinc-700 dark:text-zinc-200">{item.tray}</span>
+            <span className="text-zinc-600 dark:text-zinc-400">Tray Size</span>
+            <span className="text-zinc-900 dark:text-zinc-100">{item.tray}</span>
           </div>
         )}
         {item.weight && (
           <div className="flex justify-between py-2.5 text-sm">
-            <span className="text-zinc-400 dark:text-zinc-500">Weight / Pack</span>
-            <span className="text-zinc-700 dark:text-zinc-200">{item.weight}</span>
+            <span className="text-zinc-600 dark:text-zinc-400">Weight / Pack</span>
+            <span className="text-zinc-900 dark:text-zinc-100">{item.weight}</span>
           </div>
         )}
         {item.notes && (
           <div className="flex justify-between py-2.5 text-sm">
-            <span className="text-zinc-400 dark:text-zinc-500">Notes</span>
-            <span className="text-zinc-700 dark:text-zinc-200 text-right max-w-[60%]">
+            <span className="text-zinc-600 dark:text-zinc-400">Notes</span>
+            <span className="text-zinc-900 dark:text-zinc-100 text-right max-w-[60%]">
               {item.notes}
             </span>
           </div>
@@ -75,7 +75,7 @@ export default function PLUDetail({
           {item.tags.map((t) => (
             <span
               key={t}
-              className="text-xs px-2.5 py-1 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 font-semibold font-mono"
+              className="text-xs px-2.5 py-1 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 font-semibold font-mono"
             >
               {t}
             </span>
