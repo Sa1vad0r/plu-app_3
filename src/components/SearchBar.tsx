@@ -31,7 +31,7 @@ export default function SearchBar({ value, onChange }: SearchBarProps) {
         autoComplete="off"
         autoCorrect="off"
         spellCheck={false}
-        className="w-full py-3 pl-11 pr-11 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 text-zinc-900 dark:text-zinc-100 text-base font-medium placeholder:text-zinc-400 dark:placeholder:text-zinc-600 outline-none focus:border-red-500 transition-colors"
+        className="w-full py-3 pl-11 pr-11 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 text-zinc-900 dark:text-zinc-100 text-base font-medium placeholder:text-zinc-400 dark:placeholder:text-zinc-600 outline-none focus:border-heb-red-500 transition-colors"
       />
       {value && (
         <button

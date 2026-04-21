@@ -119,7 +119,7 @@ export default function PLUTab({
         <div className="max-w-lg mx-auto">
           <div className="flex items-center justify-between px-4 pt-3 pb-2.5">
             <div>
-              <span className="font-mono font-bold text-xl text-red-500 tracking-tight">
+              <span className="font-mono font-bold text-xl text-heb-red-500 tracking-tight">
                 PLU
               </span>
               <span className="text-zinc-600 text-sm font-normal ml-1.5">
@@ -173,7 +173,7 @@ export default function PLUTab({
               No PLUs yet
             </h3>
             <p className="text-sm text-zinc-500 leading-relaxed">
-              Tap the <strong className="text-red-500">+</strong> button to add
+              Tap the <strong className="text-heb-red-500">+</strong> button to add
               your first PLU.
               <br />
               Take pics of the book next shift!
@@ -220,7 +220,7 @@ export default function PLUTab({
           setEditItem(null);
           setFormOpen(true);
         }}
-        className="fixed bottom-20 right-5 w-14 h-14 rounded-2xl bg-red-500 text-white text-3xl flex items-center justify-center shadow-lg shadow-red-500/30 hover:bg-red-600 active:scale-90 transition-all z-40"
+        className="fixed bottom-20 right-5 w-14 h-14 rounded-2xl bg-heb-red-500 text-white text-3xl flex items-center justify-center shadow-lg shadow-heb-red-500/30 hover:bg-heb-red-600 active:scale-90 transition-all z-40"
       >
         +
       </button>

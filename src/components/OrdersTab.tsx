@@ -125,7 +125,7 @@ export default function OrdersTab({ pluItems, onToast }: OrdersTabProps) {
         <div className="max-w-lg mx-auto">
           <div className="flex items-center justify-between px-4 pt-3 pb-2.5">
             <div>
-              <span className="font-mono font-bold text-xl text-red-500 tracking-tight">
+              <span className="font-mono font-bold text-xl text-heb-red-500 tracking-tight">
                 Orders
               </span>
               {todayCount > 0 && (
@@ -144,7 +144,7 @@ export default function OrdersTab({ pluItems, onToast }: OrdersTabProps) {
                 onClick={() => setFilter(f)}
                 className={`px-4 py-2 text-[13px] font-semibold whitespace-nowrap border-b-2 transition-colors capitalize ${
                   filter === f
-                    ? 'text-red-500 border-red-500'
+                    ? 'text-heb-red-500 border-heb-red-500'
                     : 'text-zinc-500 border-transparent hover:text-zinc-300'
                 }`}
               >
@@ -197,7 +197,7 @@ export default function OrdersTab({ pluItems, onToast }: OrdersTabProps) {
       {/* FAB */}
       <button
         onClick={openAdd}
-        className="fixed bottom-20 right-5 w-14 h-14 rounded-2xl bg-red-500 text-white text-3xl flex items-center justify-center shadow-lg shadow-red-500/30 hover:bg-red-600 active:scale-90 transition-all z-40"
+        className="fixed bottom-20 right-5 w-14 h-14 rounded-2xl bg-heb-red-500 text-white text-3xl flex items-center justify-center shadow-lg shadow-heb-red-500/30 hover:bg-heb-red-600 active:scale-90 transition-all z-40"
       >
         +
       </button>

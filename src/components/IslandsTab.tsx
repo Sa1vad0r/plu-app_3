@@ -203,7 +203,7 @@ export default function IslandsTab({ pluItems, onToast }: IslandsTabProps) {
         <div className="max-w-lg mx-auto">
           <div className="flex items-center justify-between px-4 pt-3 pb-2.5">
             <div>
-              <span className="font-mono font-bold text-xl text-red-500 tracking-tight">
+              <span className="font-mono font-bold text-xl text-heb-red-500 tracking-tight">
                 Islands
               </span>
               <span className="text-zinc-600 text-xs font-normal ml-1.5">
@@ -239,7 +239,7 @@ export default function IslandsTab({ pluItems, onToast }: IslandsTabProps) {
               onClick={() => setWeekView("current")}
               className={`flex-1 py-2 text-[13px] font-semibold border-b-2 transition-colors ${
                 weekView === "current"
-                  ? "text-red-500 border-red-500"
+                  ? "text-heb-red-500 border-heb-red-500"
                   : "text-zinc-500 border-transparent"
               }`}
             >
@@ -250,7 +250,7 @@ export default function IslandsTab({ pluItems, onToast }: IslandsTabProps) {
               onClick={() => setWeekView("next")}
               className={`flex-1 py-2 text-[13px] font-semibold border-b-2 transition-colors ${
                 weekView === "next"
-                  ? "text-red-500 border-red-500"
+                  ? "text-heb-red-500 border-heb-red-500"
                   : "text-zinc-500 border-transparent"
               }`}
             >
