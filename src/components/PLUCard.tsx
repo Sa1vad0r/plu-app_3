@@ -15,7 +15,7 @@ function Highlight({ text, query }: { text: string; query: string }) {
   return (
     <>
       {text.slice(0, idx)}
-      <mark className="bg-red-500/30 text-zinc-900 dark:text-zinc-100 rounded-sm px-0.5">
+      <mark className="bg-heb-red-500/30 text-zinc-900 dark:text-zinc-100 rounded-sm px-0.5">
         {text.slice(idx, idx + query.length)}
       </mark>
       {text.slice(idx + query.length)}
@@ -44,7 +44,7 @@ export default function PLUCard({ item, query, onClick }: PLUCardProps) {
 
       {/* Info */}
       <div className="flex-1 min-w-0">
-        <div className="font-mono font-bold text-base text-red-500 mb-0.5">
+        <div className="font-mono font-bold text-base text-heb-red-500 mb-0.5">
           <Highlight text={item.plu} query={query} />
         </div>
         <div className="text-sm font-semibold text-zinc-700 dark:text-zinc-200 truncate mb-1">

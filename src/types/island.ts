@@ -14,7 +14,7 @@ export const SLOT_FLAGS: { value: SlotFlag; label: string; short: string; color:
   { value: 'bogo', label: 'BOGO', short: 'BOGO', color: 'bg-emerald-400/15 text-emerald-400' },
   { value: 'free_item', label: 'Free Item', short: 'FREE', color: 'bg-blue-400/15 text-blue-400' },
   { value: 'managers_special', label: "Manager's Special", short: 'MGR', color: 'bg-purple-400/15 text-purple-400' },
-  { value: 'new', label: 'New', short: 'NEW', color: 'bg-red-400/15 text-red-400' },
+  { value: 'new', label: 'New', short: 'NEW', color: 'bg-heb-red-400/15 text-heb-red-400' },
 ];
 
 export interface IslandConfig {

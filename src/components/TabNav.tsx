@@ -23,7 +23,7 @@ export default function TabNav({ active, onChange }: TabNavProps) {
             onClick={() => onChange(tab.id)}
             className={`flex-1 flex flex-col items-center gap-0.5 py-2.5 transition-colors ${
               active === tab.id
-                ? 'text-red-500'
+                ? 'text-heb-red-500'
                 : 'text-zinc-600 active:text-zinc-400'
             }`}
           >

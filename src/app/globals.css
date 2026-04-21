@@ -3,6 +3,19 @@
 
 @theme {
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* HEB Corporate Red Palette */
+  --color-heb-red-50: #fff1f1;
+  --color-heb-red-100: #ffd7d7;
+  --color-heb-red-200: #ffb3b3;
+  --color-heb-red-300: #ff7070;
+  --color-heb-red-400: #ee3333;
+  --color-heb-red-500: #cc0000;
+  --color-heb-red-600: #aa0000;
+  --color-heb-red-700: #880000;
+  --color-heb-red-800: #660000;
+  --color-heb-red-900: #440000;
+  --color-heb-red-950: #220000;
 }
 
 @layer base {
@@ -12,7 +25,7 @@
   }
 
   mark {
-    @apply bg-red-500/30 text-zinc-900 dark:text-zinc-100 rounded-sm px-0.5;
+    @apply bg-heb-red-500/30 text-zinc-900 dark:text-zinc-100 rounded-sm px-0.5;
   }
 }
 

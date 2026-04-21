@@ -36,7 +36,7 @@ export default function TagInput({ tags, onChange }: TagInputProps) {
   return (
     <div
       onClick={() => inputRef.current?.focus()}
-      className="flex flex-wrap gap-1.5 p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 min-h-[44px] items-center cursor-text focus-within:border-red-500 transition-colors"
+      className="flex flex-wrap gap-1.5 p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 min-h-[44px] items-center cursor-text focus-within:border-heb-red-500 transition-colors"
     >
       {tags.map((tag) => (
         <span

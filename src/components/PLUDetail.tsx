@@ -34,7 +34,7 @@ export default function PLUDetail({
       </div>
 
       {/* Code & Name */}
-      <div className="font-mono font-bold text-3xl text-red-500 mb-1">
+      <div className="font-mono font-bold text-3xl text-heb-red-500 mb-1">
         {item.plu}
       </div>
       <div className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">{item.name}</div>
@@ -89,7 +89,7 @@ export default function PLUDetail({
           onClose();
           setTimeout(() => onEdit(item), 200);
         }}
-        className="w-full py-3.5 rounded-xl bg-red-500 text-white font-bold text-[15px] hover:bg-red-600 active:scale-[0.97] transition-all mt-5"
+        className="w-full py-3.5 rounded-xl bg-heb-red-500 text-white font-bold text-[15px] hover:bg-heb-red-600 active:scale-[0.97] transition-all mt-5"
       >
         Edit
       </button>
