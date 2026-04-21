@@ -10,6 +10,7 @@ import {
 import { PLUEntry } from "@/types/plu";
 import { useIslandStore } from "@/lib/islandStore";
 import { compressImage } from "@/lib/store";
+import { generateIslandPDF } from "@/lib/islandPDF";
 import IslandMap, { SlotLocation } from "./IslandMap";
 import SlotEditor from "./SlotEditor";
 
@@ -156,6 +157,36 @@ export default function IslandsTab({ pluItems, onToast }: IslandsTabProps) {
     );
   };
 
+  const handlePDFExport = async () => {
+    try {
+      onToast("Generating PDF…");
+      const blob = await generateIslandPDF(activePlan);
+      const fileName = `island-plan-${activePlan.weekLabel.replace(/\s+/g, "-")}.pdf`;
+      const file = new File([blob], fileName, { type: "application/pdf" });
+
+      if (
+        typeof navigator.share === "function" &&
+        navigator.canShare?.({ files: [file] })
+      ) {
+        await navigator.share({
+          title: `Island Plan — ${activePlan.weekLabel}`,
+          files: [file],
+        });
+      } else {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        URL.revokeObjectURL(url);
+        onToast("PDF downloaded!");
+      }
+    } catch (err: unknown) {
+      if (err instanceof Error && err.name === "AbortError") return;
+      onToast("Failed to generate PDF", "error");
+    }
+  };
+
   const handleRollWeek = () => {
     if (
       confirm("Move next week to current? This replaces the current week plan.")
@@ -230,6 +261,13 @@ export default function IslandsTab({ pluItems, onToast }: IslandsTabProps) {
                 className="w-10 h-10 rounded-xl border border-zinc-800 bg-zinc-900 text-zinc-400 flex items-center justify-center text-lg hover:bg-zinc-800 active:scale-95 transition-all"
               >
                 📋
+              </button>
+              <button
+                onClick={handlePDFExport}
+                className="w-10 h-10 rounded-xl border border-zinc-800 bg-zinc-900 text-zinc-400 flex items-center justify-center text-lg hover:bg-zinc-800 active:scale-95 transition-all"
+                title="Export as PDF / Share via Email"
+              >
+                📄
               </button>
             </div>
           </div>
