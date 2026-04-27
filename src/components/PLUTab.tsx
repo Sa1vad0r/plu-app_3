@@ -81,12 +81,6 @@ export default function PLUTab({
       });
   }, [items, debouncedSearch, activeCategory, activeTag]);
 
-  // Group filtered items; sort by variant count desc (most variants = most recommended)
-  const groups = useMemo(
-    () => groupPLUItems(filtered).sort((a, b) => b.items.length - a.items.length),
-    [filtered]
-  );
-
   const query = debouncedSearch.trim().toLowerCase();
 
   // When searching: split into favorites section + regular results
@@ -99,8 +93,14 @@ export default function PLUTab({
     [filtered, query]
   );
 
-  const favoriteGroups = useMemo(() => groupPLUItems(favoriteMatches), [favoriteMatches]);
-  const regularGroups = useMemo(() => groupPLUItems(regularMatches), [regularMatches]);
+  const favoriteGroups = useMemo(
+    () => groupPLUItems(favoriteMatches).sort((a, b) => b.items.length - a.items.length),
+    [favoriteMatches]
+  );
+  const regularGroups = useMemo(
+    () => groupPLUItems(regularMatches).sort((a, b) => b.items.length - a.items.length),
+    [regularMatches]
+  );
 
   const handleSave = useCallback(
     (entry: PLUEntry) => {
