@@ -3,11 +3,14 @@
 import { useState, useMemo, useCallback, useRef } from 'react';
 import { PLUEntry } from '@/types/plu';
 import { fuzzyMatch, searchScore } from '@/lib/store';
+import { groupPLUItems, PLUGroup } from '@/lib/grouping';
 import { useDebounce } from '@/hooks/useDebounce';
 import SearchBar from './SearchBar';
 import CategoryTabs from './CategoryTabs';
 import TagFilter from './TagFilter';
 import PLUCard from './PLUCard';
+import PLUGroupCard from './PLUGroupCard';
+import PLUGroupSheet from './PLUGroupSheet';
 import PLUForm from './PLUForm';
 import PLUDetail from './PLUDetail';
 
@@ -38,6 +41,8 @@ export default function PLUTab({
   const [editItem, setEditItem] = useState<PLUEntry | null>(null);
   const [detailItem, setDetailItem] = useState<PLUEntry | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
+  const [groupDetail, setGroupDetail] = useState<PLUGroup | null>(null);
+  const [groupOpen, setGroupOpen] = useState(false);
   const importRef = useRef<HTMLInputElement>(null);
 
   const allTags = useMemo(() => {
@@ -75,6 +80,11 @@ export default function PLUTab({
         return diff !== 0 ? diff : a.name.localeCompare(b.name);
       });
   }, [items, debouncedSearch, activeCategory, activeTag]);
+
+  // Group filtered items; groups with 1 item render as a plain PLUCard
+  const groups = useMemo(() => groupPLUItems(filtered), [filtered]);
+
+  const query = debouncedSearch.trim().toLowerCase();
 
   const handleSave = useCallback(
     (entry: PLUEntry) => {
@@ -117,6 +127,11 @@ export default function PLUTab({
     },
     [onImport, onToast]
   );
+
+  const openItem = useCallback((item: PLUEntry) => {
+    setDetailItem(item);
+    setDetailOpen(true);
+  }, []);
 
   return (
     <div>
@@ -198,23 +213,33 @@ export default function PLUTab({
         ) : (
           <>
             <div className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest font-mono mt-4 mb-2">
-              Results{' '}
-              <span className="font-normal text-zinc-400">
-                {filtered.length}
-              </span>
+              {groups.length === filtered.length ? (
+                <>Results <span className="font-normal">{filtered.length}</span></>
+              ) : (
+                <>{groups.length} groups <span className="font-normal text-zinc-400">· {filtered.length} PLUs</span></>
+              )}
             </div>
             <div className="space-y-2">
-              {filtered.map((item) => (
-                <PLUCard
-                  key={item.id}
-                  item={item}
-                  query={debouncedSearch.trim().toLowerCase()}
-                  onClick={() => {
-                    setDetailItem(item);
-                    setDetailOpen(true);
-                  }}
-                />
-              ))}
+              {groups.map((group) =>
+                group.items.length === 1 ? (
+                  <PLUCard
+                    key={group.items[0].id}
+                    item={group.items[0]}
+                    query={query}
+                    onClick={() => openItem(group.items[0])}
+                  />
+                ) : (
+                  <PLUGroupCard
+                    key={group.key}
+                    group={group}
+                    query={query}
+                    onClick={() => {
+                      setGroupDetail(group);
+                      setGroupOpen(true);
+                    }}
+                  />
+                )
+              )}
             </div>
           </>
         )}
@@ -230,6 +255,13 @@ export default function PLUTab({
       >
         +
       </button>
+
+      <PLUGroupSheet
+        group={groupDetail}
+        open={groupOpen}
+        onClose={() => setGroupOpen(false)}
+        onSelect={openItem}
+      />
 
       <PLUForm
         open={formOpen}
