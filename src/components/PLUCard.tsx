@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { PLUEntry, getCategoryIcon } from '@/types/plu';
 
 interface PLUCardProps {
@@ -32,6 +32,15 @@ function Highlight({ text, query }: { text: string; query: string }) {
 }
 
 export default function PLUCard({ item, query, onClick, onToggleFavorite }: PLUCardProps) {
+  const [popped, setPopped] = useState(false);
+
+  const handleFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setPopped(true);
+    onToggleFavorite!(item.id);
+    setTimeout(() => setPopped(false), 300);
+  };
+
   return (
     <div className="relative">
       <button
@@ -41,11 +50,7 @@ export default function PLUCard({ item, query, onClick, onToggleFavorite }: PLUC
         {/* Thumbnail */}
         <div className="w-14 h-14 rounded-xl bg-zinc-200 dark:bg-zinc-800 flex-shrink-0 flex items-center justify-center text-2xl overflow-hidden">
           {item.photo ? (
-            <img
-              src={item.photo}
-              alt=""
-              className="w-full h-full object-cover"
-            />
+            <img src={item.photo} alt="" className="w-full h-full object-cover" />
           ) : (
             getCategoryIcon(item.category)
           )}
@@ -90,14 +95,20 @@ export default function PLUCard({ item, query, onClick, onToggleFavorite }: PLUC
       {/* Star button */}
       {onToggleFavorite && (
         <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onToggleFavorite(item.id);
-          }}
-          className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:scale-90 transition-all"
+          onClick={handleFavorite}
+          className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
           aria-label={item.favorite ? 'Remove from favorites' : 'Add to favorites'}
         >
-          <span className={`text-lg leading-none transition-all ${item.favorite ? 'text-amber-400' : 'text-zinc-300 dark:text-zinc-600'}`}>
+          <span
+            className={`inline-block select-none transition-all duration-200 ease-out ${
+              popped ? 'scale-[1.65]' : 'scale-100'
+            } ${item.favorite ? 'text-amber-400' : 'text-zinc-300 dark:text-zinc-600'}`}
+            style={
+              item.favorite
+                ? { fontSize: '1.2rem', filter: 'drop-shadow(0 0 5px rgba(251,191,36,0.75))' }
+                : { fontSize: '1.2rem' }
+            }
+          >
             {item.favorite ? '★' : '☆'}
           </span>
         </button>
