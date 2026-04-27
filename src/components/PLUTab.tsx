@@ -81,8 +81,11 @@ export default function PLUTab({
       });
   }, [items, debouncedSearch, activeCategory, activeTag]);
 
-  // Group filtered items; groups with 1 item render as a plain PLUCard
-  const groups = useMemo(() => groupPLUItems(filtered), [filtered]);
+  // Group filtered items; sort by variant count desc (most variants = most recommended)
+  const groups = useMemo(
+    () => groupPLUItems(filtered).sort((a, b) => b.items.length - a.items.length),
+    [filtered]
+  );
 
   const query = debouncedSearch.trim().toLowerCase();
 
