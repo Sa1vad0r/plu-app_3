@@ -5,7 +5,7 @@ import { useEffect, ReactNode } from 'react';
 interface BottomSheetProps {
   open: boolean;
   onClose: () => void;
-  title: string;
+  title: ReactNode;
   children: ReactNode;
 }
 

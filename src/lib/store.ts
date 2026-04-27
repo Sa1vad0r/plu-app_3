@@ -75,6 +75,13 @@ export function usePLUStore() {
     [items, persist]
   );
 
+  const toggleFavorite = useCallback(
+    (id: string) => {
+      persist(items.map((i) => (i.id === id ? { ...i, favorite: !i.favorite } : i)));
+    },
+    [items, persist]
+  );
+
   const exportItems = useCallback(() => {
     const blob = new Blob([JSON.stringify(items, null, 2)], {
       type: 'application/json',
@@ -92,6 +99,7 @@ export function usePLUStore() {
     addItem,
     updateItem,
     deleteItem,
+    toggleFavorite,
     importItems,
     exportItems,
   };

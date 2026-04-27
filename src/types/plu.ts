@@ -9,6 +9,7 @@ export interface PLUEntry {
   photo: string | null;
   notes: string;
   updated: number;
+  favorite?: boolean;
 }
 
 export type Category =

@@ -19,6 +19,7 @@ interface PLUTabProps {
   onAdd: (entry: PLUEntry) => void;
   onUpdate: (entry: PLUEntry) => void;
   onDelete: (id: string) => void;
+  onToggleFavorite: (id: string) => void;
   onImport: (data: PLUEntry[]) => number;
   onExport: () => void;
   onToast: (msg: string, type?: 'success' | 'error') => void;
@@ -29,6 +30,7 @@ export default function PLUTab({
   onAdd,
   onUpdate,
   onDelete,
+  onToggleFavorite,
   onImport,
   onExport,
   onToast,
@@ -76,7 +78,10 @@ export default function PLUTab({
       })
       .sort((a, b) => {
         if (!query) return a.name.localeCompare(b.name);
-        const diff = searchScore(b, query) - searchScore(a, query);
+        // Favorites get a +5 score boost so they surface first among similar matches
+        const scoreA = searchScore(a, query) + (a.favorite ? 5 : 0);
+        const scoreB = searchScore(b, query) + (b.favorite ? 5 : 0);
+        const diff = scoreB - scoreA;
         return diff !== 0 ? diff : a.name.localeCompare(b.name);
       });
   }, [items, debouncedSearch, activeCategory, activeTag]);
@@ -227,6 +232,7 @@ export default function PLUTab({
                     item={group.items[0]}
                     query={query}
                     onClick={() => openItem(group.items[0])}
+                    onToggleFavorite={onToggleFavorite}
                   />
                 ) : (
                   <PLUGroupCard
@@ -279,6 +285,7 @@ export default function PLUTab({
           setEditItem(item);
           setFormOpen(true);
         }}
+        onToggleFavorite={onToggleFavorite}
       />
 
       <input
