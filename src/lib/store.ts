@@ -2,8 +2,10 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { PLUEntry } from '@/types/plu';
+import seedData from '@/data/defaultPLUs.json';
 
 const DB_KEY = 'plu_data_v2';
+const SEED_KEY = 'plu_seeded_v1';
 
 export function usePLUStore() {
   const [items, setItems] = useState<PLUEntry[]>([]);
@@ -12,7 +14,17 @@ export function usePLUStore() {
   useEffect(() => {
     try {
       const raw = localStorage.getItem(DB_KEY);
-      setItems(raw ? JSON.parse(raw) : []);
+      if (raw) {
+        setItems(JSON.parse(raw));
+      } else if (!localStorage.getItem(SEED_KEY)) {
+        // First-ever load: seed with the built-in PLU catalog
+        const seed = seedData as PLUEntry[];
+        localStorage.setItem(DB_KEY, JSON.stringify(seed));
+        localStorage.setItem(SEED_KEY, '1');
+        setItems(seed);
+      } else {
+        setItems([]);
+      }
     } catch {
       setItems([]);
     }
