@@ -8,6 +8,7 @@ interface PLUDetailProps {
   open: boolean;
   onClose: () => void;
   onEdit: (item: PLUEntry) => void;
+  onToggleFavorite?: (id: string) => void;
 }
 
 export default function PLUDetail({
@@ -15,11 +16,34 @@ export default function PLUDetail({
   open,
   onClose,
   onEdit,
+  onToggleFavorite,
 }: PLUDetailProps) {
   if (!item) return null;
 
   return (
-    <BottomSheet open={open} onClose={onClose} title="PLU Detail">
+    <BottomSheet
+      open={open}
+      onClose={onClose}
+      title={
+        <div className="flex items-center justify-between w-full">
+          <span>PLU Detail</span>
+          {onToggleFavorite && (
+            <button
+              onClick={() => onToggleFavorite(item.id)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 active:scale-95 transition-all"
+              aria-label={item.favorite ? 'Remove from favorites' : 'Add to favorites'}
+            >
+              <span className={`text-xl leading-none ${item.favorite ? 'text-amber-400' : 'text-zinc-300 dark:text-zinc-600'}`}>
+                {item.favorite ? '★' : '☆'}
+              </span>
+              <span className="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">
+                {item.favorite ? 'Saved' : 'Favorite'}
+              </span>
+            </button>
+          )}
+        </div>
+      }
+    >
       {/* Photo */}
       <div className="w-full h-48 rounded-xl bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center text-5xl overflow-hidden mb-4">
         {item.photo ? (

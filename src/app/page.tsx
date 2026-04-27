@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react';
 import { usePLUStore } from '@/lib/store';
 import TabNav, { AppTab } from '@/components/TabNav';
 import PLUTab from '@/components/PLUTab';
+import FavoritesTab from '@/components/FavoritesTab';
 import OrdersTab from '@/components/OrdersTab';
 import IslandsTab from '@/components/IslandsTab';
 import Toast from '@/components/Toast';
@@ -23,6 +24,7 @@ export default function Home() {
     addItem,
     updateItem,
     deleteItem,
+    toggleFavorite,
     importItems,
     exportItems,
   } = usePLUStore();
@@ -51,8 +53,19 @@ export default function Home() {
           onAdd={addItem}
           onUpdate={updateItem}
           onDelete={deleteItem}
+          onToggleFavorite={toggleFavorite}
           onImport={importItems}
           onExport={exportItems}
+          onToast={showToast}
+        />
+      </div>
+
+      <div className={activeTab === 'favorites' ? '' : 'hidden'}>
+        <FavoritesTab
+          items={items}
+          onToggleFavorite={toggleFavorite}
+          onUpdate={updateItem}
+          onDelete={deleteItem}
           onToast={showToast}
         />
       </div>
