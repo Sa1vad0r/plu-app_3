@@ -41,11 +41,18 @@ export default function PLUTab({
   const [activeTag, setActiveTag] = useState('');
   const [formOpen, setFormOpen] = useState(false);
   const [editItem, setEditItem] = useState<PLUEntry | null>(null);
-  const [detailItem, setDetailItem] = useState<PLUEntry | null>(null);
+  // Store id only so detailItem always reflects latest store data (e.g. after favorite toggle)
+  const [detailItemId, setDetailItemId] = useState<string | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [groupDetail, setGroupDetail] = useState<PLUGroup | null>(null);
   const [groupOpen, setGroupOpen] = useState(false);
+  const [favSectionOpen, setFavSectionOpen] = useState(true);
   const importRef = useRef<HTMLInputElement>(null);
+
+  const detailItem = useMemo(
+    () => (detailItemId ? items.find((i) => i.id === detailItemId) ?? null : null),
+    [detailItemId, items]
+  );
 
   const allTags = useMemo(() => {
     const set = new Set<string>();
@@ -57,19 +64,10 @@ export default function PLUTab({
     const query = debouncedSearch.trim().toLowerCase();
     return items
       .filter((item) => {
-        if (activeCategory !== 'all' && item.category !== activeCategory)
-          return false;
+        if (activeCategory !== 'all' && item.category !== activeCategory) return false;
         if (activeTag && !item.tags.includes(activeTag)) return false;
         if (query) {
-          const blob = [
-            item.plu,
-            item.name,
-            item.category,
-            item.tray,
-            item.weight,
-            item.notes,
-            ...item.tags,
-          ]
+          const blob = [item.plu, item.name, item.category, item.tray, item.weight, item.notes, ...item.tags]
             .join(' ')
             .toLowerCase();
           if (!fuzzyMatch(blob, query)) return false;
@@ -78,10 +76,7 @@ export default function PLUTab({
       })
       .sort((a, b) => {
         if (!query) return a.name.localeCompare(b.name);
-        // Favorites get a +5 score boost so they surface first among similar matches
-        const scoreA = searchScore(a, query) + (a.favorite ? 5 : 0);
-        const scoreB = searchScore(b, query) + (b.favorite ? 5 : 0);
-        const diff = scoreB - scoreA;
+        const diff = searchScore(b, query) - searchScore(a, query);
         return diff !== 0 ? diff : a.name.localeCompare(b.name);
       });
   }, [items, debouncedSearch, activeCategory, activeTag]);
@@ -93,6 +88,19 @@ export default function PLUTab({
   );
 
   const query = debouncedSearch.trim().toLowerCase();
+
+  // When searching: split into favorites section + regular results
+  const favoriteMatches = useMemo(
+    () => (query ? filtered.filter((i) => i.favorite) : []),
+    [filtered, query]
+  );
+  const regularMatches = useMemo(
+    () => (query ? filtered.filter((i) => !i.favorite) : filtered),
+    [filtered, query]
+  );
+
+  const favoriteGroups = useMemo(() => groupPLUItems(favoriteMatches), [favoriteMatches]);
+  const regularGroups = useMemo(() => groupPLUItems(regularMatches), [regularMatches]);
 
   const handleSave = useCallback(
     (entry: PLUEntry) => {
@@ -137,9 +145,34 @@ export default function PLUTab({
   );
 
   const openItem = useCallback((item: PLUEntry) => {
-    setDetailItem(item);
+    setDetailItemId(item.id);
     setDetailOpen(true);
   }, []);
+
+  const renderCard = (item: PLUEntry) => (
+    <PLUCard
+      key={item.id}
+      item={item}
+      query={query}
+      onClick={() => openItem(item)}
+      onToggleFavorite={onToggleFavorite}
+    />
+  );
+
+  const renderGroup = (group: PLUGroup) =>
+    group.items.length === 1 ? (
+      renderCard(group.items[0])
+    ) : (
+      <PLUGroupCard
+        key={group.key}
+        group={group}
+        query={query}
+        onClick={() => {
+          setGroupDetail(group);
+          setGroupOpen(true);
+        }}
+      />
+    );
 
   return (
     <div>
@@ -148,12 +181,8 @@ export default function PLUTab({
         <div className="max-w-lg mx-auto">
           <div className="flex items-center justify-between px-4 pt-3 pb-2.5">
             <div>
-              <span className="font-mono font-bold text-xl text-heb-red-500 tracking-tight">
-                PLU
-              </span>
-              <span className="text-zinc-400 text-sm font-normal ml-1.5">
-                // quick search
-              </span>
+              <span className="font-mono font-bold text-xl text-heb-red-500 tracking-tight">PLU</span>
+              <span className="text-zinc-400 text-sm font-normal ml-1.5">// quick search</span>
             </div>
             <div className="flex gap-2">
               <button
@@ -198,12 +227,9 @@ export default function PLUTab({
         {filtered.length === 0 && items.length === 0 ? (
           <div className="text-center py-16 px-5">
             <div className="text-5xl mb-3">🥩</div>
-            <h3 className="text-base font-bold text-zinc-700 mb-1.5">
-              No PLUs yet
-            </h3>
+            <h3 className="text-base font-bold text-zinc-700 mb-1.5">No PLUs yet</h3>
             <p className="text-sm text-zinc-400 leading-relaxed">
-              Tap the <strong className="text-heb-red-500">+</strong> button to add
-              your first PLU.
+              Tap the <strong className="text-heb-red-500">+</strong> button to add your first PLU.
               <br />
               Take pics of the book next shift!
             </p>
@@ -211,45 +237,68 @@ export default function PLUTab({
         ) : filtered.length === 0 ? (
           <div className="text-center py-16 px-5">
             <div className="text-5xl mb-3">🔍</div>
-            <h3 className="text-base font-bold text-zinc-700 mb-1.5">
-              No matches
-            </h3>
-            <p className="text-sm text-zinc-400">
-              Try a different search or filter.
-            </p>
+            <h3 className="text-base font-bold text-zinc-700 mb-1.5">No matches</h3>
+            <p className="text-sm text-zinc-400">Try a different search or filter.</p>
           </div>
         ) : (
           <>
-            <div className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest font-mono mt-4 mb-2">
-              {groups.length === filtered.length ? (
-                <>Results <span className="font-normal">{filtered.length}</span></>
-              ) : (
-                <>{groups.length} groups <span className="font-normal text-zinc-400">· {filtered.length} PLUs</span></>
-              )}
-            </div>
-            <div className="space-y-2">
-              {groups.map((group) =>
-                group.items.length === 1 ? (
-                  <PLUCard
-                    key={group.items[0].id}
-                    item={group.items[0]}
-                    query={query}
-                    onClick={() => openItem(group.items[0])}
-                    onToggleFavorite={onToggleFavorite}
-                  />
-                ) : (
-                  <PLUGroupCard
-                    key={group.key}
-                    group={group}
-                    query={query}
-                    onClick={() => {
-                      setGroupDetail(group);
-                      setGroupOpen(true);
-                    }}
-                  />
-                )
-              )}
-            </div>
+            {/* ── Favorites section (only while searching) ─────────────────── */}
+            {query && favoriteMatches.length > 0 && (
+              <div className="mt-4">
+                <button
+                  onClick={() => setFavSectionOpen((v) => !v)}
+                  className="w-full flex items-center gap-2 mb-2 group"
+                >
+                  <span className="text-amber-400 text-sm leading-none">★</span>
+                  <span className="text-[11px] font-bold text-amber-500 uppercase tracking-widest font-mono">
+                    Favorites
+                  </span>
+                  <span className="text-[11px] font-normal text-zinc-400 font-mono">
+                    {favoriteMatches.length}
+                  </span>
+                  <svg
+                    className={`ml-auto text-zinc-400 transition-transform duration-200 ${favSectionOpen ? 'rotate-0' : '-rotate-90'}`}
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                  >
+                    <path d="M6 9l6 6 6-6" />
+                  </svg>
+                </button>
+
+                {favSectionOpen && (
+                  <div className="space-y-2 mb-4">
+                    {favoriteGroups.map(renderGroup)}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* ── Regular results ───────────────────────────────────────────── */}
+            {regularMatches.length > 0 && (
+              <>
+                <div className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest font-mono mt-4 mb-2">
+                  {!query ? (
+                    regularGroups.length === filtered.length ? (
+                      <>Results <span className="font-normal">{filtered.length}</span></>
+                    ) : (
+                      <>{regularGroups.length} groups <span className="font-normal">· {filtered.length} PLUs</span></>
+                    )
+                  ) : (
+                    <>Results <span className="font-normal">{regularMatches.length}</span></>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  {regularGroups.map(renderGroup)}
+                </div>
+              </>
+            )}
+
+            {/* Edge case: only favorites matched, no regular results */}
+            {query && favoriteMatches.length > 0 && regularMatches.length === 0 && null}
           </>
         )}
       </main>
@@ -291,13 +340,7 @@ export default function PLUTab({
         onToggleFavorite={onToggleFavorite}
       />
 
-      <input
-        ref={importRef}
-        type="file"
-        accept=".json"
-        onChange={handleImport}
-        className="hidden"
-      />
+      <input ref={importRef} type="file" accept=".json" onChange={handleImport} className="hidden" />
     </div>
   );
 }

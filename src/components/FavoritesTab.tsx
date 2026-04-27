@@ -57,12 +57,17 @@ export default function FavoritesTab({
   const [search, setSearch] = useState('');
   const debouncedSearch = useDebounce(search, 150);
   const [activeFilter, setActiveFilter] = useState('all');
-  const [detailItem, setDetailItem] = useState<PLUEntry | null>(null);
+  const [detailItemId, setDetailItemId] = useState<string | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [editItem, setEditItem] = useState<PLUEntry | null>(null);
   const [formOpen, setFormOpen] = useState(false);
   const [groupDetail, setGroupDetail] = useState<PLUGroup | null>(null);
   const [groupOpen, setGroupOpen] = useState(false);
+
+  const detailItem = useMemo(
+    () => (detailItemId ? items.find((i) => i.id === detailItemId) ?? null : null),
+    [detailItemId, items]
+  );
 
   const favorites = useMemo(() => items.filter((i) => i.favorite), [items]);
 
@@ -98,7 +103,7 @@ export default function FavoritesTab({
   const query = debouncedSearch.trim().toLowerCase();
 
   const openItem = useCallback((item: PLUEntry) => {
-    setDetailItem(item);
+    setDetailItemId(item.id);
     setDetailOpen(true);
   }, []);
 
