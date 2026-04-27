@@ -8,6 +8,7 @@ import {
   createEmptySlot,
 } from "@/types/island";
 import { PLUEntry } from "@/types/plu";
+import { fuzzyMatch } from "@/lib/store";
 import BottomSheet from "./BottomSheet";
 
 interface SlotEditorProps {
@@ -82,14 +83,9 @@ export default function SlotEditor({
     setPlu(val);
     setSuggestionSource('plu');
     if (val.length >= 1) {
-      const q = val.toLowerCase();
       setSuggestions(
         pluItems
-          .filter(
-            (p) =>
-              p.plu.toLowerCase().includes(q) ||
-              p.name.toLowerCase().includes(q),
-          )
+          .filter((p) => fuzzyMatch(p.plu + ' ' + p.name, val))
           .slice(0, 5),
       );
     } else {
@@ -101,10 +97,9 @@ export default function SlotEditor({
     setProductName(val);
     setSuggestionSource('name');
     if (val.length >= 1) {
-      const q = val.toLowerCase();
       setSuggestions(
         pluItems
-          .filter((p) => p.name.toLowerCase().includes(q) || p.plu.toLowerCase().includes(q))
+          .filter((p) => fuzzyMatch(p.name + ' ' + p.plu, val))
           .slice(0, 5),
       );
     } else {

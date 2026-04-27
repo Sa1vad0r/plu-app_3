@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 
 interface SearchBarProps {
   value: string;
@@ -9,6 +9,17 @@ interface SearchBarProps {
 
 export default function SearchBar({ value, onChange }: SearchBarProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === '/' && document.activeElement !== inputRef.current) {
+        e.preventDefault();
+        inputRef.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', handler);
+    return () => document.removeEventListener('keydown', handler);
+  }, []);
 
   return (
     <div className="relative">

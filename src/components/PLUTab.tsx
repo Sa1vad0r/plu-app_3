@@ -2,7 +2,8 @@
 
 import { useState, useMemo, useCallback, useRef } from 'react';
 import { PLUEntry } from '@/types/plu';
-import { fuzzyMatch } from '@/lib/store';
+import { fuzzyMatch, searchScore } from '@/lib/store';
+import { useDebounce } from '@/hooks/useDebounce';
 import SearchBar from './SearchBar';
 import CategoryTabs from './CategoryTabs';
 import TagFilter from './TagFilter';
@@ -30,6 +31,7 @@ export default function PLUTab({
   onToast,
 }: PLUTabProps) {
   const [search, setSearch] = useState('');
+  const debouncedSearch = useDebounce(search, 150);
   const [activeCategory, setActiveCategory] = useState('all');
   const [activeTag, setActiveTag] = useState('');
   const [formOpen, setFormOpen] = useState(false);
@@ -45,7 +47,7 @@ export default function PLUTab({
   }, [items]);
 
   const filtered = useMemo(() => {
-    const query = search.trim().toLowerCase();
+    const query = debouncedSearch.trim().toLowerCase();
     return items
       .filter((item) => {
         if (activeCategory !== 'all' && item.category !== activeCategory)
@@ -67,8 +69,12 @@ export default function PLUTab({
         }
         return true;
       })
-      .sort((a, b) => a.name.localeCompare(b.name));
-  }, [items, search, activeCategory, activeTag]);
+      .sort((a, b) => {
+        if (!query) return a.name.localeCompare(b.name);
+        const diff = searchScore(b, query) - searchScore(a, query);
+        return diff !== 0 ? diff : a.name.localeCompare(b.name);
+      });
+  }, [items, debouncedSearch, activeCategory, activeTag]);
 
   const handleSave = useCallback(
     (entry: PLUEntry) => {
@@ -202,7 +208,7 @@ export default function PLUTab({
                 <PLUCard
                   key={item.id}
                   item={item}
-                  query={search.trim().toLowerCase()}
+                  query={debouncedSearch.trim().toLowerCase()}
                   onClick={() => {
                     setDetailItem(item);
                     setDetailOpen(true);
