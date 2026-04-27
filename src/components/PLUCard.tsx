@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { PLUEntry, getCategoryIcon } from '@/types/plu';
 
 interface PLUCardProps {
@@ -10,17 +11,23 @@ interface PLUCardProps {
 
 function Highlight({ text, query }: { text: string; query: string }) {
   if (!query) return <>{text}</>;
-  const idx = text.toLowerCase().indexOf(query.toLowerCase());
-  if (idx === -1) return <>{text}</>;
-  return (
-    <>
-      {text.slice(0, idx)}
-      <mark className="bg-heb-red-500/30 text-zinc-900 dark:text-zinc-100 rounded-sm px-0.5">
-        {text.slice(idx, idx + query.length)}
+  const lower = text.toLowerCase();
+  const q = query.toLowerCase();
+  const parts: React.ReactNode[] = [];
+  let cursor = 0;
+  let idx = lower.indexOf(q, cursor);
+  while (idx !== -1) {
+    if (idx > cursor) parts.push(text.slice(cursor, idx));
+    parts.push(
+      <mark key={idx} className="bg-heb-red-500/30 text-zinc-900 dark:text-zinc-100 rounded-sm px-0.5">
+        {text.slice(idx, idx + q.length)}
       </mark>
-      {text.slice(idx + query.length)}
-    </>
-  );
+    );
+    cursor = idx + q.length;
+    idx = lower.indexOf(q, cursor);
+  }
+  if (cursor < text.length) parts.push(text.slice(cursor));
+  return <>{parts}</>;
 }
 
 export default function PLUCard({ item, query, onClick }: PLUCardProps) {

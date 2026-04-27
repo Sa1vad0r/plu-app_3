@@ -85,6 +85,21 @@ export function usePLUStore() {
   };
 }
 
+// Score a PLUEntry's relevance to a query (higher = more relevant)
+export function searchScore(item: { plu: string; name: string }, query: string): number {
+  if (!query) return 0;
+  const q = query.toLowerCase();
+  const plu = item.plu.toLowerCase();
+  const name = item.name.toLowerCase();
+  if (plu === q) return 100;
+  if (name === q) return 90;
+  if (plu.startsWith(q)) return 80;
+  if (name.startsWith(q)) return 70;
+  if (plu.includes(q)) return 60;
+  if (name.includes(q)) return 50;
+  return 10; // fuzzy match on other fields
+}
+
 // Fuzzy search
 export function fuzzyMatch(text: string, query: string): boolean {
   if (!query) return true;
