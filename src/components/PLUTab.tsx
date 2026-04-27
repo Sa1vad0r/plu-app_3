@@ -81,6 +81,12 @@ export default function PLUTab({
       });
   }, [items, debouncedSearch, activeCategory, activeTag]);
 
+  // Group filtered items; sort by variant count desc (most variants = most recommended)
+  const groups = useMemo(
+    () => groupPLUItems(filtered).sort((a, b) => b.items.length - a.items.length),
+    [filtered]
+  );
+
   const query = debouncedSearch.trim().toLowerCase();
 
   // When searching: split into favorites section + regular results
