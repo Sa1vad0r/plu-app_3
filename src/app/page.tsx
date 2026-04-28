@@ -7,6 +7,7 @@ import PLUTab from '@/components/PLUTab';
 import FavoritesTab from '@/components/FavoritesTab';
 import OrdersTab from '@/components/OrdersTab';
 import IslandsTab from '@/components/IslandsTab';
+import WrapTab from '@/components/WrapTab';
 import Toast from '@/components/Toast';
 
 interface ToastState {
@@ -68,6 +69,10 @@ export default function Home() {
           onDelete={deleteItem}
           onToast={showToast}
         />
+      </div>
+
+      <div className={activeTab === 'wrap' ? '' : 'hidden'}>
+        <WrapTab items={items} />
       </div>
 
       <div className={activeTab === 'orders' ? '' : 'hidden'}>

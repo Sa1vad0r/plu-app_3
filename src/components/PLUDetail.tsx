@@ -45,7 +45,7 @@ export default function PLUDetail({
       }
     >
       {/* Photo */}
-      <div className="w-full h-48 rounded-xl bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center text-5xl overflow-hidden mb-4">
+      <div className="w-full h-36 rounded-xl bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center text-5xl overflow-hidden mb-4">
         {item.photo ? (
           <img
             src={item.photo}
@@ -57,11 +57,19 @@ export default function PLUDetail({
         )}
       </div>
 
-      {/* Code & Name */}
-      <div className="font-mono font-bold text-3xl text-heb-red-500 mb-1">
-        {item.plu}
+      {/* PLU + Tray — the two things a wrapper needs */}
+      <div className="flex items-end gap-4 mb-3">
+        <div className="font-mono font-bold text-7xl leading-none text-heb-red-500 tracking-tight">
+          {item.plu}
+        </div>
+        {item.tray && (
+          <div className="mb-1.5 flex flex-col items-start">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 font-mono leading-none mb-1">Tray</span>
+            <span className="font-mono font-bold text-3xl text-zinc-800 dark:text-zinc-100 leading-none">{item.tray}</span>
+          </div>
+        )}
       </div>
-      <div className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">{item.name}</div>
+      <div className="text-lg font-semibold text-zinc-700 dark:text-zinc-300 mb-4">{item.name}</div>
 
       {/* Detail Rows */}
       <div className="space-y-0 divide-y divide-zinc-200 dark:divide-zinc-800">
@@ -69,12 +77,6 @@ export default function PLUDetail({
           <div className="flex justify-between py-2.5 text-sm">
             <span className="text-zinc-600 dark:text-zinc-400">Category</span>
             <span className="text-zinc-900 dark:text-zinc-100 capitalize">{item.category}</span>
-          </div>
-        )}
-        {item.tray && (
-          <div className="flex justify-between py-2.5 text-sm">
-            <span className="text-zinc-600 dark:text-zinc-400">Tray Size</span>
-            <span className="text-zinc-900 dark:text-zinc-100">{item.tray}</span>
           </div>
         )}
         {item.weight && (
