@@ -14,6 +14,7 @@ import PLUGroupCard from './PLUGroupCard';
 import PLUGroupSheet from './PLUGroupSheet';
 import PLUForm from './PLUForm';
 import PLUDetail from './PLUDetail';
+import RecentCard from './RecentCard';
 
 interface PLUTabProps {
   items: PLUEntry[];
@@ -26,6 +27,8 @@ interface PLUTabProps {
   onToast: (msg: string, type?: 'success' | 'error') => void;
   usageCounts: UsageCounts;
   incrementUsage: (id: string) => void;
+  recentIds: string[];
+  removeRecent: (id: string) => void;
 }
 
 export default function PLUTab({
@@ -39,6 +42,8 @@ export default function PLUTab({
   onToast,
   usageCounts,
   incrementUsage,
+  recentIds,
+  removeRecent,
 }: PLUTabProps) {
   const [search, setSearch] = useState('');
   const debouncedSearch = useDebounce(search, 150);
@@ -46,18 +51,26 @@ export default function PLUTab({
   const [activeTag, setActiveTag] = useState('');
   const [formOpen, setFormOpen] = useState(false);
   const [editItem, setEditItem] = useState<PLUEntry | null>(null);
-  // Store id only so detailItem always reflects latest store data (e.g. after favorite toggle)
   const [detailItemId, setDetailItemId] = useState<string | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [groupDetail, setGroupDetail] = useState<PLUGroup | null>(null);
   const [groupOpen, setGroupOpen] = useState(false);
   const [favSectionOpen, setFavSectionOpen] = useState(true);
+  const [carouselPage, setCarouselPage] = useState(0);
   const importRef = useRef<HTMLInputElement>(null);
+  const touchStartX = useRef(0);
 
   const detailItem = useMemo(
     () => (detailItemId ? items.find((i) => i.id === detailItemId) ?? null : null),
     [detailItemId, items]
   );
+
+  const recents = useMemo(
+    () => recentIds.map((id) => items.find((i) => i.id === id)).filter(Boolean) as PLUEntry[],
+    [recentIds, items]
+  );
+  const totalCarouselPages = Math.ceil(recents.length / 2);
+  const isCarousel = recents.length === 6;
 
   const allTags = useMemo(() => {
     const set = new Set<string>();
@@ -83,15 +96,13 @@ export default function PLUTab({
         if (!query) return a.name.localeCompare(b.name);
         const scoreDiff = searchScore(b, query) - searchScore(a, query);
         if (scoreDiff !== 0) return scoreDiff;
-        // Tiebreak by usage: more-tapped items surface first
         const usageDiff = (usageCounts[b.id] || 0) - (usageCounts[a.id] || 0);
         return usageDiff !== 0 ? usageDiff : a.name.localeCompare(b.name);
       });
-  }, [items, debouncedSearch, activeCategory, activeTag]);
+  }, [items, debouncedSearch, activeCategory, activeTag, usageCounts]);
 
   const query = debouncedSearch.trim().toLowerCase();
 
-  // When searching: split into favorites section + regular results
   const favoriteMatches = useMemo(
     () => (query ? filtered.filter((i) => i.favorite) : []),
     [filtered, query]
@@ -100,7 +111,6 @@ export default function PLUTab({
     () => (query ? filtered.filter((i) => !i.favorite) : filtered),
     [filtered, query]
   );
-
   const favoriteGroups = useMemo(
     () => groupPLUItems(favoriteMatches).sort((a, b) => b.items.length - a.items.length),
     [favoriteMatches]
@@ -157,6 +167,17 @@ export default function PLUTab({
     setDetailOpen(true);
     incrementUsage(item.id);
   }, [incrementUsage]);
+
+  const carouselSwipeStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const carouselSwipeEnd = (e: React.TouchEvent) => {
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) setCarouselPage((p) => Math.min(totalCarouselPages - 1, p + 1));
+      else setCarouselPage((p) => Math.max(0, p - 1));
+    }
+  };
 
   const renderCard = (item: PLUEntry) => (
     <PLUCard
@@ -251,7 +272,66 @@ export default function PLUTab({
           </div>
         ) : (
           <>
-            {/* ── Favorites section (only while searching) ─────────────────── */}
+            {/* ── Recents (shown when not searching) ───────────────────── */}
+            {!query && recents.length > 0 && (
+              <section className="mt-4 mb-5">
+                <div className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest font-mono mb-2">
+                  Recent <span className="font-normal">· hold to remove</span>
+                </div>
+
+                {!isCarousel ? (
+                  <div className="grid grid-cols-2 gap-2">
+                    {recents.map((item) => (
+                      <RecentCard key={item.id} item={item} onOpen={openItem} onRemove={removeRecent} />
+                    ))}
+                  </div>
+                ) : (
+                  <div>
+                    <div
+                      className="overflow-hidden rounded-xl"
+                      onTouchStart={carouselSwipeStart}
+                      onTouchEnd={carouselSwipeEnd}
+                    >
+                      <div
+                        className="flex transition-transform duration-300 ease-out"
+                        style={{ transform: `translateX(-${carouselPage * 100}%)` }}
+                      >
+                        {Array.from({ length: totalCarouselPages }, (_, page) => (
+                          <div key={page} className="w-full flex-shrink-0 grid grid-cols-2 gap-2">
+                            {recents.slice(page * 2, page * 2 + 2).map((item) => (
+                              <RecentCard key={item.id} item={item} onOpen={openItem} onRemove={removeRecent} />
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between mt-3 px-1">
+                      <button
+                        onClick={() => setCarouselPage((p) => Math.max(0, p - 1))}
+                        disabled={carouselPage === 0}
+                        className="w-9 h-9 rounded-xl border border-zinc-200 flex items-center justify-center text-zinc-500 disabled:opacity-25 active:scale-95 transition-all"
+                      >←</button>
+                      <div className="flex gap-2 items-center">
+                        {Array.from({ length: totalCarouselPages }, (_, i) => (
+                          <button
+                            key={i}
+                            onClick={() => setCarouselPage(i)}
+                            className={`rounded-full transition-all ${i === carouselPage ? 'w-4 h-2.5 bg-heb-red-500' : 'w-2.5 h-2.5 bg-zinc-300'}`}
+                          />
+                        ))}
+                      </div>
+                      <button
+                        onClick={() => setCarouselPage((p) => Math.min(totalCarouselPages - 1, p + 1))}
+                        disabled={carouselPage === totalCarouselPages - 1}
+                        className="w-9 h-9 rounded-xl border border-zinc-200 flex items-center justify-center text-zinc-500 disabled:opacity-25 active:scale-95 transition-all"
+                      >→</button>
+                    </div>
+                  </div>
+                )}
+              </section>
+            )}
+
+            {/* ── Favorites section (only while searching) ─────────────── */}
             {query && favoriteMatches.length > 0 && (
               <div className="mt-4">
                 <button
@@ -267,17 +347,12 @@ export default function PLUTab({
                   </span>
                   <svg
                     className={`ml-auto text-zinc-400 transition-transform duration-200 ${favSectionOpen ? 'rotate-0' : '-rotate-90'}`}
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
+                    width="14" height="14" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" strokeWidth="2.5"
                   >
                     <path d="M6 9l6 6 6-6" />
                   </svg>
                 </button>
-
                 {favSectionOpen && (
                   <div className="space-y-2 mb-4">
                     {favoriteGroups.map(renderGroup)}
@@ -286,7 +361,7 @@ export default function PLUTab({
               </div>
             )}
 
-            {/* ── Regular results ───────────────────────────────────────────── */}
+            {/* ── Regular results ───────────────────────────────────────── */}
             {regularMatches.length > 0 && (
               <>
                 <div className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest font-mono mt-4 mb-2">
@@ -306,7 +381,6 @@ export default function PLUTab({
               </>
             )}
 
-            {/* Edge case: only favorites matched, no regular results */}
             {query && favoriteMatches.length > 0 && regularMatches.length === 0 && null}
           </>
         )}
