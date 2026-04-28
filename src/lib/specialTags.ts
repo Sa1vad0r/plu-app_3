@@ -68,9 +68,9 @@ export const SPECIAL_TAGS: SpecialTag[] = [
   {
     key: 'texas-pack',
     label: 'TX',
-    // Square sticker — Texas flag blue bg, Texas flag red border, same size as VP
-    badgeClass: 'bg-blue-700 text-white border border-red-500 font-black text-[12px] px-2.5 rounded-sm',
-    dotClass: 'bg-blue-700',
+    // Square sticker — HEB red bg, white text, same size as VP
+    badgeClass: 'bg-heb-red-500 text-white border border-heb-red-700 font-black text-[12px] px-2.5 rounded-sm',
+    dotClass: 'bg-heb-red-500',
     // 'tx' covers tags entered as just "TX" (matches 'vp' pattern)
     matches: ['texas pack', 'tx pack', 'tx'],
   },
