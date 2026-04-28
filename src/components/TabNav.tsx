@@ -1,6 +1,6 @@
 'use client';
 
-export type AppTab = 'plu' | 'favorites' | 'orders' | 'islands';
+export type AppTab = 'plu' | 'favorites' | 'wrap' | 'orders' | 'islands';
 
 interface TabNavProps {
   active: AppTab;
@@ -9,7 +9,8 @@ interface TabNavProps {
 
 const tabs: { id: AppTab; label: string; icon: string }[] = [
   { id: 'plu', label: 'PLU', icon: '🔍' },
-  { id: 'favorites', label: 'Favorites', icon: '★' },
+  { id: 'favorites', label: 'Saved', icon: '★' },
+  { id: 'wrap', label: 'Wrap', icon: '🏷️' },
   { id: 'orders', label: 'Orders', icon: '📋' },
   { id: 'islands', label: 'Islands', icon: '🏝️' },
 ];
