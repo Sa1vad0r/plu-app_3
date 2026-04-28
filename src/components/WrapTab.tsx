@@ -218,7 +218,7 @@ export default function WrapTab({ items, usageCounts, incrementUsage, recentIds,
                       {specials.length > 0 && (
                         <div className="flex flex-wrap gap-1 mt-1">
                           {specials.map((st) => (
-                            <span key={st.key} className={`text-[10px] px-2 py-0.5 rounded-md font-mono tracking-wide ${st.badgeClass}`}>
+                            <span key={st.key} className={`text-[10px] px-2 py-0.5 font-mono tracking-wide ${st.badgeClass}`}>
                               {st.label}
                             </span>
                           ))}

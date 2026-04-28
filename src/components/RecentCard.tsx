@@ -63,7 +63,7 @@ export default function RecentCard({ item, onOpen, onRemove }: RecentCardProps) 
           {specials.length > 0 && (
             <div className="flex flex-wrap gap-1 mt-1.5">
               {specials.map((st) => (
-                <span key={st.key} className={`text-[9px] px-1.5 py-0.5 rounded font-mono ${st.badgeClass}`}>
+                <span key={st.key} className={`text-[9px] px-1.5 py-0.5 font-mono ${st.badgeClass}`}>
                   {st.label}
                 </span>
               ))}
