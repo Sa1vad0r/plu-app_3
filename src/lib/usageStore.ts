@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 const USAGE_KEY = 'plu_usage_v1';
 const RECENTS_KEY = 'plu_recents_v1';
-const MAX_RECENTS = 6;
+const MAX_RECENTS = 100;
 
 export type UsageCounts = Record<string, number>; // PLU id → tap count
 

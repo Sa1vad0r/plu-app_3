@@ -69,8 +69,8 @@ export default function PLUTab({
     () => recentIds.map((id) => items.find((i) => i.id === id)).filter(Boolean) as PLUEntry[],
     [recentIds, items]
   );
-  const totalCarouselPages = Math.ceil(recents.length / 2);
-  const isCarousel = recents.length === 6;
+  const RECENTS_PER_PAGE = 6; // 2 cols × 3 rows per page
+  const totalCarouselPages = Math.ceil(recents.length / RECENTS_PER_PAGE);
 
   const allTags = useMemo(() => {
     const set = new Set<string>();
@@ -279,32 +279,26 @@ export default function PLUTab({
                   Recent <span className="font-normal">· hold to remove</span>
                 </div>
 
-                {!isCarousel ? (
-                  <div className="grid grid-cols-2 gap-2">
-                    {recents.map((item) => (
-                      <RecentCard key={item.id} item={item} onOpen={openItem} onRemove={removeRecent} />
-                    ))}
-                  </div>
-                ) : (
-                  <div>
+                <div>
+                  <div
+                    className="overflow-hidden"
+                    onTouchStart={carouselSwipeStart}
+                    onTouchEnd={carouselSwipeEnd}
+                  >
                     <div
-                      className="overflow-hidden rounded-xl"
-                      onTouchStart={carouselSwipeStart}
-                      onTouchEnd={carouselSwipeEnd}
+                      className="flex transition-transform duration-300 ease-out"
+                      style={{ transform: `translateX(-${carouselPage * 100}%)` }}
                     >
-                      <div
-                        className="flex transition-transform duration-300 ease-out"
-                        style={{ transform: `translateX(-${carouselPage * 100}%)` }}
-                      >
-                        {Array.from({ length: totalCarouselPages }, (_, page) => (
-                          <div key={page} className="w-full flex-shrink-0 grid grid-cols-2 gap-2">
-                            {recents.slice(page * 2, page * 2 + 2).map((item) => (
-                              <RecentCard key={item.id} item={item} onOpen={openItem} onRemove={removeRecent} />
-                            ))}
-                          </div>
-                        ))}
-                      </div>
+                      {Array.from({ length: totalCarouselPages }, (_, page) => (
+                        <div key={page} className="w-full flex-shrink-0 grid grid-cols-2 gap-2">
+                          {recents.slice(page * RECENTS_PER_PAGE, (page + 1) * RECENTS_PER_PAGE).map((item) => (
+                            <RecentCard key={item.id} item={item} onOpen={openItem} onRemove={removeRecent} />
+                          ))}
+                        </div>
+                      ))}
                     </div>
+                  </div>
+                  {totalCarouselPages > 1 && (
                     <div className="flex items-center justify-between mt-3 px-1">
                       <button
                         onClick={() => setCarouselPage((p) => Math.max(0, p - 1))}
@@ -326,8 +320,8 @@ export default function PLUTab({
                         className="w-9 h-9 rounded-xl border border-zinc-200 flex items-center justify-center text-zinc-500 disabled:opacity-25 active:scale-95 transition-all"
                       >→</button>
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </section>
             )}
 
