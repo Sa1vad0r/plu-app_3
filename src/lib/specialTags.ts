@@ -13,22 +13,25 @@ export const SPECIAL_TAGS: SpecialTag[] = [
   {
     key: 'wagyu',
     label: 'WAGYU',
-    badgeClass: 'bg-zinc-900 text-purple-400 border border-purple-700 font-black tracking-widest rounded-md',
-    dotClass: 'bg-purple-500',
+    // Dark gray bg, light blue-purple text
+    badgeClass: 'bg-zinc-800 text-violet-300 border border-violet-600 font-black tracking-widest rounded-md',
+    dotClass: 'bg-violet-400',
     matches: ['wagyu'],
   },
   {
     key: 'grass-fed',
     label: '🌿 GRASS FED',
-    badgeClass: 'bg-emerald-900 text-emerald-100 border border-emerald-700 font-bold rounded-md',
-    dotClass: 'bg-emerald-900',
+    // Slightly lighter than before
+    badgeClass: 'bg-emerald-800 text-emerald-100 border border-emerald-600 font-bold rounded-md',
+    dotClass: 'bg-emerald-700',
     matches: ['grass fed', 'grass-fed', 'grassfed'],
   },
   {
     key: 'prime',
     label: 'PRIME',
-    badgeClass: 'bg-black text-heb-red-500 border border-zinc-700 font-black tracking-wide rounded-md',
-    dotClass: 'bg-heb-red-500',
+    // Dark gray bg, light red text
+    badgeClass: 'bg-zinc-800 text-heb-red-300 border border-zinc-600 font-black tracking-wide rounded-md',
+    dotClass: 'bg-heb-red-400',
     matches: ['prime'],
   },
   {
@@ -48,8 +51,9 @@ export const SPECIAL_TAGS: SpecialTag[] = [
   {
     key: 'value',
     label: 'VALUE',
-    badgeClass: 'bg-orange-800 text-heb-red-400 border border-red-600 font-bold tracking-wide rounded-md',
-    dotClass: 'bg-orange-800',
+    // Dusty bright orange bg, mid red border and text
+    badgeClass: 'bg-orange-400 text-red-600 border border-red-500 font-bold tracking-wide rounded-md',
+    dotClass: 'bg-orange-500',
     matches: ['value beef', 'value grade'],
   },
   // ── Packaging types ────────────────────────────────────────────────────
@@ -67,7 +71,8 @@ export const SPECIAL_TAGS: SpecialTag[] = [
     // Square sticker — Texas flag blue bg, Texas flag red border, same size as VP
     badgeClass: 'bg-blue-700 text-white border border-red-500 font-black text-[12px] px-2.5 rounded-sm',
     dotClass: 'bg-blue-700',
-    matches: ['texas pack', 'tx pack'],
+    // 'tx' covers tags entered as just "TX" (matches 'vp' pattern)
+    matches: ['texas pack', 'tx pack', 'tx'],
   },
   // ── Cut type ───────────────────────────────────────────────────────────
   {
