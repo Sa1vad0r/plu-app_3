@@ -31,7 +31,7 @@ export default function Home() {
     exportItems,
   } = usePLUStore();
 
-  const { counts: usageCounts, increment: incrementUsage } = useUsageStore();
+  const { counts: usageCounts, recentIds, increment: incrementUsage, removeRecent } = useUsageStore();
 
   const showToast = useCallback(
     (message: string, type: 'success' | 'error' = 'success') => {
@@ -63,6 +63,8 @@ export default function Home() {
           onToast={showToast}
           usageCounts={usageCounts}
           incrementUsage={incrementUsage}
+          recentIds={recentIds}
+          removeRecent={removeRecent}
         />
       </div>
 
@@ -78,7 +80,13 @@ export default function Home() {
       </div>
 
       <div className={activeTab === 'wrap' ? '' : 'hidden'}>
-        <WrapTab items={items} usageCounts={usageCounts} incrementUsage={incrementUsage} />
+        <WrapTab
+          items={items}
+          usageCounts={usageCounts}
+          incrementUsage={incrementUsage}
+          recentIds={recentIds}
+          removeRecent={removeRecent}
+        />
       </div>
 
       <div className={activeTab === 'orders' ? '' : 'hidden'}>
