@@ -2,11 +2,15 @@
 
 import { useState, useCallback, useMemo, useRef } from 'react';
 import { PLUEntry, CATEGORIES, getCategoryIcon } from '@/types/plu';
+import { UsageCounts } from '@/lib/usageStore';
+import { getSpecialTags, regularTags } from '@/lib/specialTags';
 
 const MAX_RECENTS = 6;
 
 interface WrapTabProps {
   items: PLUEntry[];
+  usageCounts: UsageCounts;
+  incrementUsage: (id: string) => void;
 }
 
 function RecentCard({
@@ -92,7 +96,7 @@ function RecentCard({
   );
 }
 
-export default function WrapTab({ items }: WrapTabProps) {
+export default function WrapTab({ items, usageCounts, incrementUsage }: WrapTabProps) {
   const [recentIds, setRecentIds] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [displayItem, setDisplayItem] = useState<PLUEntry | null>(null);
@@ -110,8 +114,11 @@ export default function WrapTab({ items }: WrapTabProps) {
     if (!selectedCategory) return [];
     return items
       .filter((i) => i.category === selectedCategory)
-      .sort((a, b) => a.name.localeCompare(b.name));
-  }, [items, selectedCategory]);
+      .sort((a, b) => {
+        const usageDiff = (usageCounts[b.id] || 0) - (usageCounts[a.id] || 0);
+        return usageDiff !== 0 ? usageDiff : a.name.localeCompare(b.name);
+      });
+  }, [items, selectedCategory, usageCounts]);
 
   const categoriesWithCounts = useMemo(
     () =>
@@ -124,13 +131,13 @@ export default function WrapTab({ items }: WrapTabProps) {
 
   const openItem = useCallback((item: PLUEntry) => {
     setDisplayItem(item);
+    incrementUsage(item.id);
     setRecentIds((prev) => {
       const deduped = prev.filter((id) => id !== item.id);
       return [item.id, ...deduped].slice(0, MAX_RECENTS);
     });
-    // Reset carousel to first page when a new item is added
     setCarouselPage(0);
-  }, []);
+  }, [incrementUsage]);
 
   const removeRecent = useCallback((id: string) => {
     setRecentIds((prev) => prev.filter((rid) => rid !== id));
@@ -292,46 +299,65 @@ export default function WrapTab({ items }: WrapTabProps) {
               </span>
             </div>
             <div className="space-y-2">
-              {categoryItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => openItem(item)}
-                  className="w-full flex items-center gap-4 px-4 py-4 rounded-xl border border-zinc-200 bg-white active:scale-[0.98] transition-all text-left"
-                >
-                  {/* Thumbnail */}
-                  <div className="w-12 h-12 rounded-xl bg-zinc-100 flex-shrink-0 flex items-center justify-center text-2xl overflow-hidden">
-                    {item.photo ? (
-                      <img src={item.photo} alt="" className="w-full h-full object-cover" />
-                    ) : (
-                      getCategoryIcon(item.category)
+              {categoryItems.map((item) => {
+                const specials = getSpecialTags(item.tags);
+                const regular = regularTags(item.tags);
+                const accentDot = specials[0]?.dotClass;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => openItem(item)}
+                    className="w-full flex items-center gap-4 px-4 py-4 rounded-xl border border-zinc-200 bg-white active:scale-[0.98] transition-all text-left overflow-hidden relative"
+                  >
+                    {/* Special-tag accent stripe */}
+                    {accentDot && (
+                      <span className={`absolute left-0 top-0 bottom-0 w-1 rounded-l-xl ${accentDot}`} />
                     )}
-                  </div>
 
-                  {/* Name + tags */}
-                  <div className="flex-1 min-w-0">
-                    <div className="font-semibold text-base text-zinc-900 leading-snug">
-                      {item.name}
+                    {/* Thumbnail */}
+                    <div className={`w-12 h-12 rounded-xl bg-zinc-100 flex-shrink-0 flex items-center justify-center text-2xl overflow-hidden ${accentDot ? 'ml-1' : ''}`}>
+                      {item.photo ? (
+                        <img src={item.photo} alt="" className="w-full h-full object-cover" />
+                      ) : (
+                        getCategoryIcon(item.category)
+                      )}
                     </div>
-                    {item.tags.length > 0 && (
-                      <div className="text-[11px] text-zinc-400 mt-0.5 truncate">
-                        {item.tags.join(' · ')}
-                      </div>
-                    )}
-                  </div>
 
-                  {/* PLU + tray */}
-                  <div className="text-right flex-shrink-0">
-                    <div className="font-mono font-bold text-xl text-heb-red-500 leading-none">
-                      {item.plu}
-                    </div>
-                    {item.tray && (
-                      <div className="text-[11px] text-zinc-400 font-mono mt-1">
-                        {item.tray}
+                    {/* Name + special badges + regular tags */}
+                    <div className="flex-1 min-w-0">
+                      <div className="font-semibold text-base text-zinc-900 leading-snug">
+                        {item.name}
                       </div>
-                    )}
-                  </div>
-                </button>
-              ))}
+                      {specials.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          {specials.map((st) => (
+                            <span key={st.key} className={`text-[10px] px-2 py-0.5 rounded-md font-mono tracking-wide ${st.badgeClass}`}>
+                              {st.label}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      {regular.length > 0 && (
+                        <div className="text-[11px] text-zinc-400 mt-0.5 truncate">
+                          {regular.join(' · ')}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* PLU + tray */}
+                    <div className="text-right flex-shrink-0">
+                      <div className="font-mono font-bold text-xl text-heb-red-500 leading-none">
+                        {item.plu}
+                      </div>
+                      {item.tray && (
+                        <div className="text-[11px] text-zinc-400 font-mono mt-1">
+                          {item.tray}
+                        </div>
+                      )}
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </section>
         )}

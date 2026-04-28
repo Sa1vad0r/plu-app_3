@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { PLUEntry, getCategoryIcon } from '@/types/plu';
+import { getSpecialTags, regularTags } from '@/lib/specialTags';
 
 interface PLUCardProps {
   item: PLUEntry;
@@ -34,6 +35,10 @@ function Highlight({ text, query }: { text: string; query: string }) {
 export default function PLUCard({ item, query, onClick, onToggleFavorite }: PLUCardProps) {
   const [popped, setPopped] = useState(false);
 
+  const specials = getSpecialTags(item.tags);
+  const regular = regularTags(item.tags);
+  const accentDot = specials[0]?.dotClass;
+
   const handleFavorite = (e: React.MouseEvent) => {
     e.stopPropagation();
     setPopped(true);
@@ -45,8 +50,13 @@ export default function PLUCard({ item, query, onClick, onToggleFavorite }: PLUC
     <div className="relative">
       <button
         onClick={onClick}
-        className="w-full flex gap-3 items-start p-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 hover:bg-zinc-100/80 dark:hover:bg-zinc-800/80 active:scale-[0.985] transition-all text-left"
+        className="w-full flex gap-3 items-start p-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 hover:bg-zinc-100/80 dark:hover:bg-zinc-800/80 active:scale-[0.985] transition-all text-left overflow-hidden"
       >
+        {/* Special-tag accent stripe on left edge */}
+        {accentDot && (
+          <span className={`absolute left-0 top-0 bottom-0 w-1 rounded-l-xl ${accentDot}`} />
+        )}
+
         {/* Thumbnail */}
         <div className="w-14 h-14 rounded-xl bg-zinc-200 dark:bg-zinc-800 flex-shrink-0 flex items-center justify-center text-2xl overflow-hidden">
           {item.photo ? (
@@ -57,13 +67,29 @@ export default function PLUCard({ item, query, onClick, onToggleFavorite }: PLUC
         </div>
 
         {/* Info */}
-        <div className="flex-1 min-w-0 pr-8">
+        <div className={`flex-1 min-w-0 pr-8 ${accentDot ? 'pl-1' : ''}`}>
           <div className="font-mono font-bold text-base text-heb-red-500 mb-0.5">
             <Highlight text={item.plu} query={query} />
           </div>
           <div className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 truncate mb-1">
             <Highlight text={item.name} query={query} />
           </div>
+
+          {/* Special badges — prominent, above regular tags */}
+          {specials.length > 0 && (
+            <div className="flex flex-wrap gap-1 mb-1">
+              {specials.map((st) => (
+                <span
+                  key={st.key}
+                  className={`text-[10px] px-2 py-0.5 rounded-md font-mono tracking-wide ${st.badgeClass}`}
+                >
+                  {st.label}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* Regular meta pills */}
           <div className="flex flex-wrap gap-1">
             {item.category && (
               <span className="text-[10px] px-2 py-0.5 rounded-md bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-semibold font-mono">
@@ -80,7 +106,7 @@ export default function PLUCard({ item, query, onClick, onToggleFavorite }: PLUC
                 {item.weight}
               </span>
             )}
-            {item.tags.map((t) => (
+            {regular.map((t) => (
               <span
                 key={t}
                 className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 font-semibold font-mono"
