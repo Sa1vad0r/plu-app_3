@@ -1,21 +1,110 @@
 'use client';
 
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useRef } from 'react';
 import { PLUEntry, CATEGORIES, getCategoryIcon } from '@/types/plu';
+
+const MAX_RECENTS = 6;
 
 interface WrapTabProps {
   items: PLUEntry[];
+}
+
+function RecentCard({
+  item,
+  onOpen,
+  onRemove,
+}: {
+  item: PLUEntry;
+  onOpen: (item: PLUEntry) => void;
+  onRemove: (id: string) => void;
+}) {
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const holdTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const startHold = () => {
+    holdTimer.current = setTimeout(() => setConfirmDelete(true), 500);
+  };
+
+  const cancelHold = () => {
+    if (holdTimer.current) {
+      clearTimeout(holdTimer.current);
+      holdTimer.current = null;
+    }
+  };
+
+  const handleClick = () => {
+    if (confirmDelete) {
+      setConfirmDelete(false);
+      return;
+    }
+    onOpen(item);
+  };
+
+  return (
+    <div className="relative select-none">
+      <button
+        onPointerDown={startHold}
+        onPointerUp={cancelHold}
+        onPointerLeave={cancelHold}
+        onClick={handleClick}
+        className={`w-full flex flex-col items-start p-4 rounded-xl border bg-white active:scale-[0.97] transition-all text-left ${
+          confirmDelete ? 'border-red-300' : 'border-zinc-200'
+        }`}
+      >
+        <div className="font-mono font-bold text-2xl text-heb-red-500 leading-none mb-1.5">
+          {item.plu}
+        </div>
+        <div className="text-xs font-semibold text-zinc-700 leading-snug w-full break-words">
+          {item.name}
+        </div>
+        {item.tray && (
+          <div className="text-[10px] text-zinc-400 font-mono mt-1">
+            Tray {item.tray}
+          </div>
+        )}
+      </button>
+
+      {confirmDelete && (
+        <div className="absolute inset-0 rounded-xl flex items-center justify-center gap-2 bg-zinc-950/70">
+          <button
+            onPointerDown={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+              onRemove(item.id);
+            }}
+            className="px-4 py-2 rounded-xl bg-red-500 text-white text-sm font-bold active:scale-95 transition-all"
+          >
+            Remove
+          </button>
+          <button
+            onPointerDown={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+              setConfirmDelete(false);
+            }}
+            className="px-3 py-2 rounded-xl bg-zinc-700 text-white text-sm font-bold active:scale-95 transition-all"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default function WrapTab({ items }: WrapTabProps) {
   const [recentIds, setRecentIds] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [displayItem, setDisplayItem] = useState<PLUEntry | null>(null);
+  const [carouselPage, setCarouselPage] = useState(0);
+  const touchStartX = useRef(0);
 
   const recents = useMemo(
     () => recentIds.map((id) => items.find((i) => i.id === id)).filter(Boolean) as PLUEntry[],
     [recentIds, items]
   );
+
+  const totalCarouselPages = Math.ceil(recents.length / 2); // 1–3
 
   const categoryItems = useMemo(() => {
     if (!selectedCategory) return [];
@@ -37,9 +126,33 @@ export default function WrapTab({ items }: WrapTabProps) {
     setDisplayItem(item);
     setRecentIds((prev) => {
       const deduped = prev.filter((id) => id !== item.id);
-      return [item.id, ...deduped].slice(0, 8);
+      return [item.id, ...deduped].slice(0, MAX_RECENTS);
     });
+    // Reset carousel to first page when a new item is added
+    setCarouselPage(0);
   }, []);
+
+  const removeRecent = useCallback((id: string) => {
+    setRecentIds((prev) => prev.filter((rid) => rid !== id));
+    setCarouselPage(0);
+  }, []);
+
+  const carouselSwipeStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const carouselSwipeEnd = (e: React.TouchEvent) => {
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        setCarouselPage((p) => Math.min(totalCarouselPages - 1, p + 1));
+      } else {
+        setCarouselPage((p) => Math.max(0, p - 1));
+      }
+    }
+  };
+
+  const isCarousel = recents.length === MAX_RECENTS;
 
   return (
     <div>
@@ -67,29 +180,73 @@ export default function WrapTab({ items }: WrapTabProps) {
         {recents.length > 0 && (
           <section className="mt-4 mb-6">
             <div className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest font-mono mb-2">
-              Recent
+              Recent {isCarousel && <span className="font-normal">· hold to remove</span>}
             </div>
-            <div className="grid grid-cols-2 gap-2">
-              {recents.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => openItem(item)}
-                  className="flex flex-col items-start p-4 rounded-xl border border-zinc-200 bg-white active:scale-[0.97] transition-all text-left"
+
+            {!isCarousel ? (
+              /* Grid (1–5 items) */
+              <div className="grid grid-cols-2 gap-2">
+                {recents.map((item) => (
+                  <RecentCard key={item.id} item={item} onOpen={openItem} onRemove={removeRecent} />
+                ))}
+              </div>
+            ) : (
+              /* Carousel (6 items: 3 pages × 2 wide) */
+              <div>
+                <div
+                  className="overflow-hidden rounded-xl"
+                  onTouchStart={carouselSwipeStart}
+                  onTouchEnd={carouselSwipeEnd}
                 >
-                  <div className="font-mono font-bold text-2xl text-heb-red-500 leading-none mb-1.5">
-                    {item.plu}
+                  <div
+                    className="flex transition-transform duration-300 ease-out"
+                    style={{ transform: `translateX(-${carouselPage * 100}%)` }}
+                  >
+                    {Array.from({ length: totalCarouselPages }, (_, page) => (
+                      <div key={page} className="w-full flex-shrink-0 grid grid-cols-2 gap-2">
+                        {recents.slice(page * 2, page * 2 + 2).map((item) => (
+                          <RecentCard key={item.id} item={item} onOpen={openItem} onRemove={removeRecent} />
+                        ))}
+                      </div>
+                    ))}
                   </div>
-                  <div className="text-xs font-semibold text-zinc-700 leading-snug w-full" style={{ wordBreak: 'break-word' }}>
-                    {item.name}
+                </div>
+
+                {/* Controls */}
+                <div className="flex items-center justify-between mt-3 px-1">
+                  <button
+                    onClick={() => setCarouselPage((p) => Math.max(0, p - 1))}
+                    disabled={carouselPage === 0}
+                    className="w-9 h-9 rounded-xl border border-zinc-200 flex items-center justify-center text-zinc-500 disabled:opacity-25 active:scale-95 transition-all"
+                  >
+                    ←
+                  </button>
+
+                  {/* Page dots */}
+                  <div className="flex gap-2 items-center">
+                    {Array.from({ length: totalCarouselPages }, (_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setCarouselPage(i)}
+                        className={`rounded-full transition-all ${
+                          i === carouselPage
+                            ? 'w-4 h-2.5 bg-heb-red-500'
+                            : 'w-2.5 h-2.5 bg-zinc-300'
+                        }`}
+                      />
+                    ))}
                   </div>
-                  {item.tray && (
-                    <div className="text-[10px] text-zinc-400 font-mono mt-1">
-                      Tray {item.tray}
-                    </div>
-                  )}
-                </button>
-              ))}
-            </div>
+
+                  <button
+                    onClick={() => setCarouselPage((p) => Math.min(totalCarouselPages - 1, p + 1))}
+                    disabled={carouselPage === totalCarouselPages - 1}
+                    className="w-9 h-9 rounded-xl border border-zinc-200 flex items-center justify-center text-zinc-500 disabled:opacity-25 active:scale-95 transition-all"
+                  >
+                    →
+                  </button>
+                </div>
+              </div>
+            )}
           </section>
         )}
 
@@ -186,7 +343,6 @@ export default function WrapTab({ items }: WrapTabProps) {
           className="fixed inset-0 z-60 bg-zinc-950 flex flex-col items-center justify-center p-8"
           onClick={() => setDisplayItem(null)}
         >
-          {/* Photo or emoji */}
           {displayItem.photo ? (
             <div className="w-28 h-28 rounded-2xl overflow-hidden mb-6 flex-shrink-0">
               <img src={displayItem.photo} alt="" className="w-full h-full object-cover" />
@@ -197,25 +353,24 @@ export default function WrapTab({ items }: WrapTabProps) {
             </div>
           )}
 
-          {/* Meat name */}
           <div className="text-zinc-400 text-lg font-semibold mb-2 text-center leading-snug">
             {displayItem.name}
           </div>
 
-          {/* PLU — the main event */}
-          <div className="font-mono font-bold text-white tracking-tight text-center leading-none mb-6"
+          <div
+            className="font-mono font-bold text-white tracking-tight text-center leading-none mb-6"
             style={{ fontSize: 'clamp(72px, 22vw, 120px)' }}
           >
             {displayItem.plu}
           </div>
 
-          {/* Tray size */}
           {displayItem.tray && (
             <div className="bg-zinc-800 rounded-2xl px-8 py-4 text-center mb-2">
               <div className="text-zinc-500 text-xs font-bold uppercase tracking-widest font-mono mb-1">
                 Tray Size
               </div>
-              <div className="font-mono font-bold text-white leading-none"
+              <div
+                className="font-mono font-bold text-white leading-none"
                 style={{ fontSize: 'clamp(32px, 10vw, 48px)' }}
               >
                 {displayItem.tray}
