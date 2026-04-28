@@ -7,6 +7,7 @@ import { fuzzyMatch, searchScore } from '@/lib/store';
 import { useDebounce } from '@/hooks/useDebounce';
 import SearchBar from './SearchBar';
 import PLUCard from './PLUCard';
+import { UsageCounts } from '@/lib/usageStore';
 import PLUGroupCard from './PLUGroupCard';
 import PLUGroupSheet from './PLUGroupSheet';
 import PLUDetail from './PLUDetail';
@@ -45,6 +46,7 @@ interface FavoritesTabProps {
   onUpdate: (entry: PLUEntry) => void;
   onDelete: (id: string) => void;
   onToast: (msg: string, type?: 'success' | 'error') => void;
+  incrementUsage: (id: string) => void;
 }
 
 export default function FavoritesTab({
@@ -53,6 +55,7 @@ export default function FavoritesTab({
   onUpdate,
   onDelete,
   onToast,
+  incrementUsage,
 }: FavoritesTabProps) {
   const [search, setSearch] = useState('');
   const debouncedSearch = useDebounce(search, 150);
@@ -105,7 +108,8 @@ export default function FavoritesTab({
   const openItem = useCallback((item: PLUEntry) => {
     setDetailItemId(item.id);
     setDetailOpen(true);
-  }, []);
+    incrementUsage(item.id);
+  }, [incrementUsage]);
 
   const handleSave = useCallback(
     (entry: PLUEntry) => {

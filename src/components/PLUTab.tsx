@@ -3,6 +3,7 @@
 import { useState, useMemo, useCallback, useRef } from 'react';
 import { PLUEntry } from '@/types/plu';
 import { fuzzyMatch, searchScore } from '@/lib/store';
+import { UsageCounts } from '@/lib/usageStore';
 import { groupPLUItems, PLUGroup } from '@/lib/grouping';
 import { useDebounce } from '@/hooks/useDebounce';
 import SearchBar from './SearchBar';
@@ -23,6 +24,8 @@ interface PLUTabProps {
   onImport: (data: PLUEntry[]) => number;
   onExport: () => void;
   onToast: (msg: string, type?: 'success' | 'error') => void;
+  usageCounts: UsageCounts;
+  incrementUsage: (id: string) => void;
 }
 
 export default function PLUTab({
@@ -34,6 +37,8 @@ export default function PLUTab({
   onImport,
   onExport,
   onToast,
+  usageCounts,
+  incrementUsage,
 }: PLUTabProps) {
   const [search, setSearch] = useState('');
   const debouncedSearch = useDebounce(search, 150);
@@ -76,8 +81,11 @@ export default function PLUTab({
       })
       .sort((a, b) => {
         if (!query) return a.name.localeCompare(b.name);
-        const diff = searchScore(b, query) - searchScore(a, query);
-        return diff !== 0 ? diff : a.name.localeCompare(b.name);
+        const scoreDiff = searchScore(b, query) - searchScore(a, query);
+        if (scoreDiff !== 0) return scoreDiff;
+        // Tiebreak by usage: more-tapped items surface first
+        const usageDiff = (usageCounts[b.id] || 0) - (usageCounts[a.id] || 0);
+        return usageDiff !== 0 ? usageDiff : a.name.localeCompare(b.name);
       });
   }, [items, debouncedSearch, activeCategory, activeTag]);
 
@@ -147,7 +155,8 @@ export default function PLUTab({
   const openItem = useCallback((item: PLUEntry) => {
     setDetailItemId(item.id);
     setDetailOpen(true);
-  }, []);
+    incrementUsage(item.id);
+  }, [incrementUsage]);
 
   const renderCard = (item: PLUEntry) => (
     <PLUCard

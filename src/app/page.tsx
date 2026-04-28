@@ -9,6 +9,7 @@ import OrdersTab from '@/components/OrdersTab';
 import IslandsTab from '@/components/IslandsTab';
 import WrapTab from '@/components/WrapTab';
 import Toast from '@/components/Toast';
+import { useUsageStore } from '@/lib/usageStore';
 
 interface ToastState {
   message: string;
@@ -29,6 +30,8 @@ export default function Home() {
     importItems,
     exportItems,
   } = usePLUStore();
+
+  const { counts: usageCounts, increment: incrementUsage } = useUsageStore();
 
   const showToast = useCallback(
     (message: string, type: 'success' | 'error' = 'success') => {
@@ -58,6 +61,8 @@ export default function Home() {
           onImport={importItems}
           onExport={exportItems}
           onToast={showToast}
+          usageCounts={usageCounts}
+          incrementUsage={incrementUsage}
         />
       </div>
 
@@ -68,11 +73,12 @@ export default function Home() {
           onUpdate={updateItem}
           onDelete={deleteItem}
           onToast={showToast}
+          incrementUsage={incrementUsage}
         />
       </div>
 
       <div className={activeTab === 'wrap' ? '' : 'hidden'}>
-        <WrapTab items={items} />
+        <WrapTab items={items} usageCounts={usageCounts} incrementUsage={incrementUsage} />
       </div>
 
       <div className={activeTab === 'orders' ? '' : 'hidden'}>
