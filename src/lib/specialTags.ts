@@ -1,7 +1,7 @@
 export interface SpecialTag {
   key: string;
   label: string;
-  badgeClass: string; // Tailwind classes for the badge pill
+  badgeClass: string; // Tailwind classes for the badge pill (includes rounding)
   dotClass: string;   // Tailwind classes for the left-edge accent stripe
   matches: string[];  // substrings to match against tag text (lowercase)
 }
@@ -13,81 +13,77 @@ export const SPECIAL_TAGS: SpecialTag[] = [
   {
     key: 'wagyu',
     label: 'WAGYU',
-    // Deep charcoal with gold — ultra-premium HEB Wagyu label feel
-    badgeClass: 'bg-zinc-900 text-amber-300 border border-amber-500 font-black tracking-widest',
-    dotClass: 'bg-amber-400',
+    badgeClass: 'bg-zinc-900 text-purple-400 border border-purple-700 font-black tracking-widest rounded-md',
+    dotClass: 'bg-purple-500',
     matches: ['wagyu'],
   },
   {
     key: 'grass-fed',
     label: '🌿 GRASS FED',
-    // HEB Natural Grass Fed — green packaging
-    badgeClass: 'bg-emerald-700 text-white border border-emerald-900 font-bold',
-    dotClass: 'bg-emerald-600',
+    badgeClass: 'bg-emerald-900 text-emerald-100 border border-emerald-700 font-bold rounded-md',
+    dotClass: 'bg-emerald-900',
     matches: ['grass fed', 'grass-fed', 'grassfed'],
   },
   {
     key: 'prime',
-    label: '⭐ PRIME',
-    // HEB Prime — black label with gold text
-    badgeClass: 'bg-zinc-800 text-yellow-300 border border-zinc-600 font-black tracking-wide',
-    dotClass: 'bg-yellow-400',
+    label: 'PRIME',
+    badgeClass: 'bg-black text-heb-red-500 border border-zinc-700 font-black tracking-wide rounded-md',
+    dotClass: 'bg-heb-red-500',
     matches: ['prime'],
   },
   {
     key: 'choice',
     label: 'CHOICE',
-    // HEB Choice — matches HEB corporate red
-    badgeClass: 'bg-heb-red-500 text-white border border-heb-red-700 font-bold tracking-wide',
-    dotClass: 'bg-heb-red-500',
+    badgeClass: 'bg-blue-600 text-white border border-blue-800 font-bold tracking-wide rounded-md',
+    dotClass: 'bg-blue-600',
     matches: ['choice'],
   },
   {
     key: 'select',
     label: 'SELECT',
-    // USDA Select — industry blue
-    badgeClass: 'bg-blue-600 text-white border border-blue-800 font-bold tracking-wide',
-    dotClass: 'bg-blue-500',
+    badgeClass: 'bg-heb-red-500 text-white border border-heb-red-700 font-bold tracking-wide rounded-md',
+    dotClass: 'bg-heb-red-500',
     matches: ['select'],
   },
   {
     key: 'value',
     label: 'VALUE',
-    // Value beef — yellow/budget
-    badgeClass: 'bg-yellow-400 text-yellow-900 border border-yellow-600 font-bold tracking-wide',
-    dotClass: 'bg-yellow-400',
+    badgeClass: 'bg-orange-800 text-heb-red-400 border border-red-600 font-bold tracking-wide rounded-md',
+    dotClass: 'bg-orange-800',
     matches: ['value beef', 'value grade'],
   },
   // ── Packaging types ────────────────────────────────────────────────────
   {
     key: 'vp',
     label: 'VP',
-    // Value Pack — bold orange, large text
-    badgeClass: 'bg-orange-500 text-white border border-orange-700 font-black text-[12px] px-2.5',
-    dotClass: 'bg-orange-500',
+    // Square sticker — solid HEB red, minimal rounding
+    badgeClass: 'bg-heb-red-500 text-white border border-heb-red-700 font-black text-[12px] px-2.5 rounded-sm',
+    dotClass: 'bg-heb-red-500',
     matches: ['value pack', 'vp', 'family pack'],
   },
   {
     key: 'texas-pack',
-    label: '⭐ TX PACK',
-    // Texas Pack — Texas flag deep blue
-    badgeClass: 'bg-blue-900 text-white border border-blue-700 font-bold',
-    dotClass: 'bg-blue-800',
+    label: 'TX',
+    // Square sticker — Texas flag blue bg, Texas flag red border, same size as VP
+    badgeClass: 'bg-blue-700 text-white border border-red-500 font-black text-[12px] px-2.5 rounded-sm',
+    dotClass: 'bg-blue-700',
     matches: ['texas pack', 'tx pack'],
   },
   // ── Cut type ───────────────────────────────────────────────────────────
   {
     key: 'thick',
-    label: 'THICK CUT',
-    badgeClass: 'bg-orange-100 text-orange-800 border border-orange-400 font-bold',
-    dotClass: 'bg-orange-400',
+    label: 'THICK',
+    // Lipstick red — solid dark rose
+    badgeClass: 'bg-rose-700 text-white border border-rose-900 font-bold rounded-md',
+    dotClass: 'bg-rose-700',
     matches: ['thick cut', 'thick'],
   },
   {
     key: 'thin',
-    label: 'THIN CUT',
-    badgeClass: 'bg-cyan-100 text-cyan-800 border border-cyan-400 font-bold',
-    dotClass: 'bg-cyan-400',
+    label: 'THIN',
+    // Inverse of thick — light rose bg, rose text/border
+    badgeClass: 'bg-rose-50 text-rose-700 border border-rose-600 font-bold rounded-md',
+    dotClass: 'bg-rose-500',
     matches: ['thin cut', 'thin'],
   },
 ];

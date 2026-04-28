@@ -81,7 +81,7 @@ export default function PLUCard({ item, query, onClick, onToggleFavorite }: PLUC
               {specials.map((st) => (
                 <span
                   key={st.key}
-                  className={`text-[10px] px-2 py-0.5 rounded-md font-mono tracking-wide ${st.badgeClass}`}
+                  className={`text-[10px] px-2 py-0.5 font-mono tracking-wide ${st.badgeClass}`}
                 >
                   {st.label}
                 </span>
