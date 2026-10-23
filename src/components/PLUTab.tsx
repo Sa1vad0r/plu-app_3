@@ -211,7 +211,7 @@ export default function PLUTab({
         <div className="max-w-lg mx-auto">
           <div className="flex items-center justify-between px-4 pt-3 pb-2.5">
             <div>
-              <span className="font-mono font-bold text-xl text-heb-red-500 tracking-tight">PLU</span>
+              <span className="font-mono font-bold text-xl text-brand-red-500 tracking-tight">PLU</span>
               <span className="text-zinc-400 text-sm font-normal ml-1.5">// quick search</span>
             </div>
             <div className="flex gap-2">
@@ -259,7 +259,7 @@ export default function PLUTab({
             <div className="text-5xl mb-3">🥩</div>
             <h3 className="text-base font-bold text-zinc-700 mb-1.5">No PLUs yet</h3>
             <p className="text-sm text-zinc-400 leading-relaxed">
-              Tap the <strong className="text-heb-red-500">+</strong> button to add your first PLU.
+              Tap the <strong className="text-brand-red-500">+</strong> button to add your first PLU.
               <br />
               Take pics of the book next shift!
             </p>
@@ -310,7 +310,7 @@ export default function PLUTab({
                           <button
                             key={i}
                             onClick={() => setCarouselPage(i)}
-                            className={`rounded-full transition-all ${i === carouselPage ? 'w-4 h-2.5 bg-heb-red-500' : 'w-2.5 h-2.5 bg-zinc-300'}`}
+                            className={`rounded-full transition-all ${i === carouselPage ? 'w-4 h-2.5 bg-brand-red-500' : 'w-2.5 h-2.5 bg-zinc-300'}`}
                           />
                         ))}
                       </div>
@@ -386,7 +386,7 @@ export default function PLUTab({
           setEditItem(null);
           setFormOpen(true);
         }}
-        className="fixed bottom-20 right-5 w-14 h-14 rounded-2xl bg-heb-red-500 text-white text-3xl flex items-center justify-center shadow-lg shadow-heb-red-500/30 hover:bg-heb-red-600 active:scale-90 transition-all z-40"
+        className="fixed bottom-20 right-5 w-14 h-14 rounded-2xl bg-brand-red-500 text-white text-3xl flex items-center justify-center shadow-lg shadow-brand-red-500/30 hover:bg-brand-red-600 active:scale-90 transition-all z-40"
       >
         +
       </button>

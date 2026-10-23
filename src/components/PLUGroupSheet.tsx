@@ -36,7 +36,7 @@ export default function PLUGroupSheet({
               }}
               className="w-full text-left flex items-center gap-3 p-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 active:scale-[0.985] transition-all"
             >
-              <div className="flex-shrink-0 font-mono font-bold text-heb-red-500 text-sm w-14 text-right">
+              <div className="flex-shrink-0 font-mono font-bold text-brand-red-500 text-sm w-14 text-right">
                 {item.plu}
               </div>
               <div className="flex-1 min-w-0">

@@ -14,7 +14,7 @@ export const SLOT_FLAGS: { value: SlotFlag; label: string; short: string; color:
   { value: 'bogo', label: 'BOGO', short: 'BOGO', color: 'bg-emerald-400/15 text-emerald-400' },
   { value: 'free_item', label: 'Free Item', short: 'FREE', color: 'bg-blue-400/15 text-blue-400' },
   { value: 'managers_special', label: "Manager's Special", short: 'MGR', color: 'bg-purple-400/15 text-purple-400' },
-  { value: 'new', label: 'New', short: 'NEW', color: 'bg-heb-red-400/15 text-heb-red-400' },
+  { value: 'new', label: 'New', short: 'NEW', color: 'bg-brand-red-400/15 text-brand-red-400' },
 ];
 
 export interface IslandConfig {
@@ -27,9 +27,9 @@ export interface IslandConfig {
 }
 
 export const ISLANDS: IslandConfig[] = [
-  { id: 'island1', label: 'Island 1', topEndcap: '4', bottomEndcap: '3', rows: 25, type: 'short' },
-  { id: 'island3', label: 'Island 3', topEndcap: '2', bottomEndcap: '1', rows: 30, type: 'long' },
-  { id: 'island2', label: 'Island 2', topEndcap: '6', bottomEndcap: '5', rows: 30, type: 'long' },
+  { id: 'island1', label: 'Case A', topEndcap: 'A1', bottomEndcap: 'A2', rows: 20, type: 'short' },
+  { id: 'island3', label: 'Case B', topEndcap: 'B1', bottomEndcap: 'B2', rows: 30, type: 'long' },
+  { id: 'island2', label: 'Case C', topEndcap: 'C1', bottomEndcap: 'C2', rows: 30, type: 'long' },
 ];
 
 export interface ExtraSection {
@@ -38,7 +38,7 @@ export interface ExtraSection {
 }
 
 export const EXTRA_SECTIONS: ExtraSection[] = [
-  { id: 'meal_deal', label: 'Meal Deal' },
+  { id: 'meal_deal', label: 'Featured Bundle' },
   { id: 'freezer_display', label: 'Freezer Display' },
 ];
 

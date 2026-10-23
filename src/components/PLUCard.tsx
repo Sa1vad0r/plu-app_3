@@ -21,7 +21,7 @@ function Highlight({ text, query }: { text: string; query: string }) {
   while (idx !== -1) {
     if (idx > cursor) parts.push(text.slice(cursor, idx));
     parts.push(
-      <mark key={idx} className="bg-heb-red-500/30 text-zinc-900 dark:text-zinc-100 rounded-sm px-0.5">
+      <mark key={idx} className="bg-brand-red-500/30 text-zinc-900 dark:text-zinc-100 rounded-sm px-0.5">
         {text.slice(idx, idx + q.length)}
       </mark>
     );
@@ -68,7 +68,7 @@ export default function PLUCard({ item, query, onClick, onToggleFavorite }: PLUC
 
         {/* Info */}
         <div className={`flex-1 min-w-0 pr-8 ${accentDot ? 'pl-1' : ''}`}>
-          <div className="font-mono font-bold text-base text-heb-red-500 mb-0.5">
+          <div className="font-mono font-bold text-base text-brand-red-500 mb-0.5">
             <Highlight text={item.plu} query={query} />
           </div>
           <div className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 truncate mb-1">

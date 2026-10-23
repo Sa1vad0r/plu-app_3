@@ -30,8 +30,8 @@ export const SPECIAL_TAGS: SpecialTag[] = [
     key: 'prime',
     label: 'PRIME',
     // Dark gray bg, light red text
-    badgeClass: 'bg-zinc-800 text-heb-red-300 border border-zinc-600 font-black tracking-wide rounded-md',
-    dotClass: 'bg-heb-red-400',
+    badgeClass: 'bg-zinc-800 text-brand-red-300 border border-zinc-600 font-black tracking-wide rounded-md',
+    dotClass: 'bg-brand-red-400',
     matches: ['prime'],
   },
   {
@@ -44,8 +44,8 @@ export const SPECIAL_TAGS: SpecialTag[] = [
   {
     key: 'select',
     label: 'SELECT',
-    badgeClass: 'bg-heb-red-500 text-white border border-heb-red-700 font-bold tracking-wide rounded-md',
-    dotClass: 'bg-heb-red-500',
+    badgeClass: 'bg-brand-red-500 text-white border border-brand-red-700 font-bold tracking-wide rounded-md',
+    dotClass: 'bg-brand-red-500',
     matches: ['select'],
   },
   {
@@ -60,17 +60,17 @@ export const SPECIAL_TAGS: SpecialTag[] = [
   {
     key: 'vp',
     label: 'VP',
-    // Square sticker — solid HEB red, minimal rounding
-    badgeClass: 'bg-heb-red-500 text-white border border-heb-red-700 font-black text-[12px] px-2.5 rounded-sm',
-    dotClass: 'bg-heb-red-500',
+    // Square sticker — solid brand red, minimal rounding
+    badgeClass: 'bg-brand-red-500 text-white border border-brand-red-700 font-black text-[12px] px-2.5 rounded-sm',
+    dotClass: 'bg-brand-red-500',
     matches: ['value pack', 'vp', 'family pack'],
   },
   {
     key: 'texas-pack',
     label: 'TX',
-    // Square sticker — HEB red bg, white text, same size as VP
-    badgeClass: 'bg-heb-red-500 text-white border border-heb-red-700 font-black text-[12px] px-2.5 rounded-sm',
-    dotClass: 'bg-heb-red-500',
+    // Square sticker — brand red bg, white text, same size as VP
+    badgeClass: 'bg-brand-red-500 text-white border border-brand-red-700 font-black text-[12px] px-2.5 rounded-sm',
+    dotClass: 'bg-brand-red-500',
     // 'tx' covers tags entered as just "TX" (matches 'vp' pattern)
     matches: ['texas pack', 'tx pack', 'tx'],
   },

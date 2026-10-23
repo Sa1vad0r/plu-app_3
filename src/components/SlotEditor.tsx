@@ -171,7 +171,7 @@ export default function SlotEditor({
           value={plu}
           onChange={(e) => handlePluSearch(e.target.value)}
           placeholder="Search PLU or product..."
-          className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 bg-white text-zinc-900 text-[15px] outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-400"
+          className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 bg-white text-zinc-900 text-[15px] outline-none focus:border-brand-red-500 transition-colors placeholder:text-zinc-400"
         />
         {suggestions.length > 0 && suggestionSource === 'plu' && (
           <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-zinc-200 rounded-lg overflow-hidden z-10 shadow-lg">
@@ -181,7 +181,7 @@ export default function SlotEditor({
                 onClick={() => selectPlu(s)}
                 className="w-full text-left px-3 py-2.5 hover:bg-zinc-50 transition-colors border-b border-zinc-100 last:border-0"
               >
-                <span className="font-mono text-heb-red-500 text-sm font-bold">
+                <span className="font-mono text-brand-red-500 text-sm font-bold">
                   {s.plu}
                 </span>
                 <span className="text-zinc-600 text-sm ml-2">{s.name}</span>
@@ -200,7 +200,7 @@ export default function SlotEditor({
           value={productName}
           onChange={(e) => handleNameSearch(e.target.value)}
           placeholder="e.g. Beef Ribeye Steak"
-          className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 bg-white text-zinc-900 text-[15px] outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-400"
+          className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 bg-white text-zinc-900 text-[15px] outline-none focus:border-brand-red-500 transition-colors placeholder:text-zinc-400"
         />
         {suggestions.length > 0 && suggestionSource === 'name' && (
           <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-zinc-200 rounded-lg overflow-hidden z-10 shadow-lg">
@@ -210,7 +210,7 @@ export default function SlotEditor({
                 onClick={() => selectPlu(s)}
                 className="w-full text-left px-3 py-2.5 hover:bg-zinc-50 transition-colors border-b border-zinc-100 last:border-0"
               >
-                <span className="font-mono text-heb-red-500 text-sm font-bold">
+                <span className="font-mono text-brand-red-500 text-sm font-bold">
                   {s.plu}
                 </span>
                 <span className="text-zinc-600 text-sm ml-2">{s.name}</span>
@@ -231,7 +231,7 @@ export default function SlotEditor({
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             placeholder="$5.99/lb"
-            className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 bg-white text-zinc-900 text-[15px] outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-400"
+            className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 bg-white text-zinc-900 text-[15px] outline-none focus:border-brand-red-500 transition-colors placeholder:text-zinc-400"
           />
         </div>
         <div>
@@ -243,7 +243,7 @@ export default function SlotEditor({
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Any notes..."
-            className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 bg-white text-zinc-900 text-[15px] outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-400"
+            className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 bg-white text-zinc-900 text-[15px] outline-none focus:border-brand-red-500 transition-colors placeholder:text-zinc-400"
           />
         </div>
       </div>
@@ -289,7 +289,7 @@ export default function SlotEditor({
                 onClearSingle();
                 onClose();
               }}
-              className="w-full py-3 rounded-xl border border-heb-red-200 text-heb-red-500 font-semibold text-sm hover:bg-heb-red-50 transition-colors"
+              className="w-full py-3 rounded-xl border border-brand-red-200 text-brand-red-500 font-semibold text-sm hover:bg-brand-red-50 transition-colors"
             >
               Clear slot
             </button>
@@ -324,7 +324,7 @@ export default function SlotEditor({
                   </div>
                   <button
                     onClick={() => removeFromMulti(item.id)}
-                    className="text-zinc-600 hover:text-heb-red-400 text-lg"
+                    className="text-zinc-600 hover:text-brand-red-400 text-lg"
                   >
                     ✕
                   </button>

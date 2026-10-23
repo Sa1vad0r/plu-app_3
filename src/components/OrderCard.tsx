@@ -24,7 +24,7 @@ export default function OrderCard({ order, onClick }: OrderCardProps) {
       onClick={onClick}
       className={`w-full text-left p-3.5 rounded-xl border transition-all active:scale-[0.985] ${
         overdue
-          ? 'border-heb-red-300 bg-heb-red-50/60'
+          ? 'border-brand-red-300 bg-brand-red-50/60'
           : 'border-zinc-200 bg-white hover:bg-zinc-50'
       }`}
     >

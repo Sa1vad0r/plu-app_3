@@ -27,7 +27,7 @@ export default function TabNav({ active, onChange }: TabNavProps) {
               active === tab.id
                 ? tab.id === 'favorites'
                   ? 'text-amber-400'
-                  : 'text-heb-red-500'
+                  : 'text-brand-red-500'
                 : 'text-zinc-500 active:text-zinc-700'
             }`}
           >

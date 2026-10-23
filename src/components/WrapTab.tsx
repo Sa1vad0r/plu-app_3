@@ -74,7 +74,7 @@ export default function WrapTab({ items, usageCounts, incrementUsage, recentIds,
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-zinc-200/50">
         <div className="max-w-lg mx-auto">
           <div className="flex items-center px-4 pt-3 pb-3">
-            <span className="font-mono font-bold text-xl text-heb-red-500 tracking-tight">Wrap</span>
+            <span className="font-mono font-bold text-xl text-brand-red-500 tracking-tight">Wrap</span>
             <span className="text-zinc-400 text-sm font-normal ml-1.5">// browse PLUs</span>
             {selectedCategory && (
               <button
@@ -128,7 +128,7 @@ export default function WrapTab({ items, usageCounts, incrementUsage, recentIds,
                       <button
                         key={i}
                         onClick={() => setCarouselPage(i)}
-                        className={`rounded-full transition-all ${i === carouselPage ? 'w-4 h-2.5 bg-heb-red-500' : 'w-2.5 h-2.5 bg-zinc-300'}`}
+                        className={`rounded-full transition-all ${i === carouselPage ? 'w-4 h-2.5 bg-brand-red-500' : 'w-2.5 h-2.5 bg-zinc-300'}`}
                       />
                     ))}
                   </div>
@@ -154,7 +154,7 @@ export default function WrapTab({ items, usageCounts, incrementUsage, recentIds,
                 <div className="text-5xl mb-3">🥩</div>
                 <h3 className="text-base font-bold text-zinc-700 mb-1.5">No PLUs yet</h3>
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                  Add PLUs in the <strong className="text-heb-red-500">PLU</strong> tab first.
+                  Add PLUs in the <strong className="text-brand-red-500">PLU</strong> tab first.
                 </p>
               </div>
             ) : (
@@ -163,7 +163,7 @@ export default function WrapTab({ items, usageCounts, incrementUsage, recentIds,
                   <button
                     key={cat.value}
                     onClick={() => setSelectedCategory(cat.value)}
-                    className="flex flex-col items-center justify-center gap-2 py-6 px-4 rounded-2xl border-2 border-zinc-200 bg-white hover:border-heb-red-500/50 hover:bg-heb-red-50 active:scale-[0.97] transition-all"
+                    className="flex flex-col items-center justify-center gap-2 py-6 px-4 rounded-2xl border-2 border-zinc-200 bg-white hover:border-brand-red-500/50 hover:bg-brand-red-50 active:scale-[0.97] transition-all"
                   >
                     <span className="text-5xl leading-none">{cat.icon}</span>
                     <span className="font-bold text-sm text-zinc-800">{cat.label}</span>
@@ -225,7 +225,7 @@ export default function WrapTab({ items, usageCounts, incrementUsage, recentIds,
                       )}
                     </div>
                     <div className="text-right flex-shrink-0">
-                      <div className="font-mono font-bold text-xl text-heb-red-500 leading-none">
+                      <div className="font-mono font-bold text-xl text-brand-red-500 leading-none">
                         {item.plu}
                       </div>
                       {item.tray && (

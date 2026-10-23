@@ -23,7 +23,7 @@ export default function Toast({ message, type = 'success', onDone }: ToastProps)
   return (
     <div
       className={`fixed bottom-24 left-1/2 -translate-x-1/2 z-[999] px-5 py-2.5 rounded-xl text-white text-sm font-semibold shadow-lg transition-all duration-300 ${
-        type === 'error' ? 'bg-heb-red-600' : 'bg-emerald-500'
+        type === 'error' ? 'bg-brand-red-600' : 'bg-emerald-500'
       } ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
     >
       {message}

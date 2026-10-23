@@ -29,7 +29,7 @@ export const ORDER_STATUS_CONFIG: Record<
   pending: { label: 'Pending', color: 'text-amber-400', bg: 'bg-amber-400/15' },
   ready: { label: 'Ready', color: 'text-emerald-400', bg: 'bg-emerald-400/15' },
   picked_up: { label: 'Picked Up', color: 'text-zinc-400', bg: 'bg-zinc-400/15' },
-  cancelled: { label: 'Cancelled', color: 'text-heb-red-400', bg: 'bg-heb-red-400/15' },
+  cancelled: { label: 'Cancelled', color: 'text-brand-red-400', bg: 'bg-brand-red-400/15' },
 };
 
 export function generateOrderId(): string {

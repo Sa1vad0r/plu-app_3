@@ -33,7 +33,7 @@ export default function PLUGroupCard({ group, query, onClick }: PLUGroupCardProp
           <span className="text-sm font-bold text-zinc-900 dark:text-zinc-100 truncate">
             {group.displayName}
           </span>
-          <span className="flex-shrink-0 text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-heb-red-500 text-white">
+          <span className="flex-shrink-0 text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-brand-red-500 text-white">
             {group.items.length}
           </span>
         </div>

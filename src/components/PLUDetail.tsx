@@ -59,7 +59,7 @@ export default function PLUDetail({
 
       {/* PLU + Tray — the two things a wrapper needs */}
       <div className="flex items-end gap-4 mb-3">
-        <div className="font-mono font-bold text-7xl leading-none text-heb-red-500 tracking-tight">
+        <div className="font-mono font-bold text-7xl leading-none text-brand-red-500 tracking-tight">
           {item.plu}
         </div>
         {item.tray && (
@@ -115,7 +115,7 @@ export default function PLUDetail({
           onClose();
           setTimeout(() => onEdit(item), 200);
         }}
-        className="w-full py-3.5 rounded-xl bg-heb-red-500 text-white font-bold text-[15px] hover:bg-heb-red-600 active:scale-[0.97] transition-all mt-5"
+        className="w-full py-3.5 rounded-xl bg-brand-red-500 text-white font-bold text-[15px] hover:bg-brand-red-600 active:scale-[0.97] transition-all mt-5"
       >
         Edit
       </button>

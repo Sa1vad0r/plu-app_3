@@ -108,7 +108,7 @@ export default function PLUForm({
             value={plu}
             onChange={(e) => setPlu(e.target.value)}
             placeholder="e.g. 4011"
-            className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 text-zinc-900 dark:text-zinc-100 text-[15px] outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
+            className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 text-zinc-900 dark:text-zinc-100 text-[15px] outline-none focus:border-brand-red-500 transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
           />
         </div>
 
@@ -122,7 +122,7 @@ export default function PLUForm({
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="e.g. Beef Ribeye Steak"
-            className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 text-zinc-900 dark:text-zinc-100 text-[15px] outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
+            className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 text-zinc-900 dark:text-zinc-100 text-[15px] outline-none focus:border-brand-red-500 transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
           />
         </div>
 
@@ -134,7 +134,7 @@ export default function PLUForm({
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 text-zinc-900 dark:text-zinc-100 text-[15px] outline-none focus:border-heb-red-500 transition-colors appearance-none"
+            className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 text-zinc-900 dark:text-zinc-100 text-[15px] outline-none focus:border-brand-red-500 transition-colors appearance-none"
           >
             <option value="">Select category</option>
             {CATEGORIES.map((c) => (
@@ -153,7 +153,7 @@ export default function PLUForm({
           <select
             value={tray}
             onChange={(e) => setTray(e.target.value)}
-            className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 text-zinc-900 dark:text-zinc-100 text-[15px] outline-none focus:border-heb-red-500 transition-colors appearance-none"
+            className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 text-zinc-900 dark:text-zinc-100 text-[15px] outline-none focus:border-brand-red-500 transition-colors appearance-none"
           >
             <option value="">Select tray size</option>
             {TRAY_SIZES.map((t) => (
@@ -174,7 +174,7 @@ export default function PLUForm({
             value={weight}
             onChange={(e) => setWeight(e.target.value)}
             placeholder="e.g. 1.5 lb, family pack"
-            className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 text-zinc-900 dark:text-zinc-100 text-[15px] outline-none focus:border-heb-red-500 transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
+            className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 text-zinc-900 dark:text-zinc-100 text-[15px] outline-none focus:border-brand-red-500 transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
           />
         </div>
 
@@ -219,7 +219,7 @@ export default function PLUForm({
           {photo && (
             <button
               onClick={() => setPhoto(null)}
-              className="mt-1.5 text-xs text-heb-red-400 hover:text-heb-red-300"
+              className="mt-1.5 text-xs text-brand-red-400 hover:text-brand-red-300"
             >
               Remove photo
             </button>
@@ -236,7 +236,7 @@ export default function PLUForm({
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Special handling, packaging notes..."
             rows={3}
-            className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 text-zinc-900 dark:text-zinc-100 text-[15px] outline-none focus:border-heb-red-500 transition-colors resize-y placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
+            className="w-full py-3 px-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 text-zinc-900 dark:text-zinc-100 text-[15px] outline-none focus:border-brand-red-500 transition-colors resize-y placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
           />
         </div>
 
@@ -244,7 +244,7 @@ export default function PLUForm({
         <button
           onClick={handleSave}
           disabled={!plu.trim() || !name.trim()}
-          className="w-full py-3.5 rounded-xl bg-heb-red-500 text-white font-bold text-[15px] hover:bg-heb-red-600 active:scale-[0.97] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+          className="w-full py-3.5 rounded-xl bg-brand-red-500 text-white font-bold text-[15px] hover:bg-brand-red-600 active:scale-[0.97] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
         >
           {editItem ? 'Update PLU' : 'Save PLU'}
         </button>
@@ -252,7 +252,7 @@ export default function PLUForm({
         {editItem && onDelete && (
           <button
             onClick={handleDelete}
-            className="w-full py-3 rounded-xl border border-heb-red-800 text-heb-red-400 font-semibold text-sm hover:bg-heb-red-900/20 transition-colors"
+            className="w-full py-3 rounded-xl border border-brand-red-800 text-brand-red-400 font-semibold text-sm hover:bg-brand-red-900/20 transition-colors"
           >
             Delete this PLU
           </button>

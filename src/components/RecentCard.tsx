@@ -53,7 +53,7 @@ export default function RecentCard({ item, onOpen, onRemove }: RecentCardProps) 
         )}
 
         <div className={`w-full ${accentDot ? 'pl-1' : ''}`}>
-          <div className="font-mono font-bold text-2xl text-heb-red-500 leading-none mb-1.5">
+          <div className="font-mono font-bold text-2xl text-brand-red-500 leading-none mb-1.5">
             {item.plu}
           </div>
           <div className="text-xs font-semibold text-zinc-700 leading-snug w-full break-words">

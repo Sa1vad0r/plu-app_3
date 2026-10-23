@@ -264,13 +264,13 @@ export default function IslandMap({
 
   return (
     <div className="space-y-2" id="island-map">
-      {/* Top row: Island 1 (left) + Extras (right) — same width columns */}
+      {/* Top row: Case A (left) + Extras (right) — same width columns */}
       <div className="flex gap-2 items-start">
         <div className="flex-1">{renderIsland(island1, "w-full")}</div>
         <div className="flex-1 pt-6">{extraBlocks}</div>
       </div>
 
-      {/* Bottom row: Island 3 (left) + Island 2 (right) — same width columns */}
+      {/* Bottom row: Case B (left) + Case C (right) — same width columns */}
       <div className="flex gap-2 items-start">
         <div className="flex-1">{renderIsland(island3, "w-full")}</div>
         <div className="flex-1">{renderIsland(island2, "w-full")}</div>

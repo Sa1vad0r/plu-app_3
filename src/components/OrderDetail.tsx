@@ -121,13 +121,13 @@ export default function OrderDetail({
         {order.status === 'pending' && (
           <button
             onClick={() => onStatusChange(order.id, 'cancelled')}
-            className="mt-2 text-xs text-zinc-400 hover:text-heb-red-500 transition-colors"
+            className="mt-2 text-xs text-zinc-400 hover:text-brand-red-500 transition-colors"
           >
             Cancel order
           </button>
         )}
         {overdue && (
-          <div className="mt-2 text-xs text-heb-red-400 font-semibold">
+          <div className="mt-2 text-xs text-brand-red-400 font-semibold">
             ⚠ This order is past its pickup time
           </div>
         )}
@@ -167,7 +167,7 @@ export default function OrderDetail({
               </div>
               <div className="flex flex-wrap gap-1.5 mt-1.5">
                 {item.plu && (
-                  <span className="text-[10px] px-2 py-0.5 rounded-md bg-heb-red-500/15 text-heb-red-400 font-mono font-semibold">
+                  <span className="text-[10px] px-2 py-0.5 rounded-md bg-brand-red-500/15 text-brand-red-400 font-mono font-semibold">
                     PLU: {item.plu}
                   </span>
                 )}
@@ -213,7 +213,7 @@ export default function OrderDetail({
             onClose();
             setTimeout(() => onEdit(order), 200);
           }}
-          className="w-full py-3.5 rounded-xl bg-heb-red-500 text-white font-bold text-[15px] hover:bg-heb-red-600 active:scale-[0.97] transition-all"
+          className="w-full py-3.5 rounded-xl bg-brand-red-500 text-white font-bold text-[15px] hover:bg-brand-red-600 active:scale-[0.97] transition-all"
         >
           Edit Order
         </button>
